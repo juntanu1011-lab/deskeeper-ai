@@ -1,0 +1,53 @@
+/* design.md §6. Sizes are FLUID: the table in design.md gives the desktop (1440) and
+   mobile references; clamp() interpolates between them and lets the page grow on wide
+   screens instead of stranding small type in a 1080px column.
+
+   NOTE: --font-display / --font-body / --font-num are defined in app/layout.tsx via
+   next/font/google (design.md §6.1 requires next/font/google, not a CSS @import). */
+:root{
+--display-xl-size:clamp(36px,6.2vw,88px); /* @kind font */
+--display-xl-size-sp:36px; /* @kind font */
+--display-xl-weight:900; /* @kind font */
+--display-xl-lh:1.05; /* @kind font */
+--display-xl-ls:-0.02em; /* @kind font */
+--display-l-size:clamp(30px,3.1vw,54px); /* @kind font */
+--display-l-size-sp:28px; /* @kind font */
+--display-l-weight:800; /* @kind font */
+--display-l-lh:1.1; /* @kind font */
+--display-l-ls:-0.015em; /* @kind font */
+--display-m-size:clamp(28px,2.7vw,48px); /* @kind font */
+--display-m-size-sp:26px; /* @kind font */
+--display-m-weight:800; /* @kind font */
+--display-m-lh:1.15; /* @kind font */
+--display-m-ls:-0.01em; /* @kind font */
+--display-s-size:clamp(18px,1.4vw,23px); /* @kind font */
+--display-s-weight:800; /* @kind font */
+--display-s-lh:1.3; /* @kind font */
+--display-s-ls:0; /* @kind font */
+--body-l-size:clamp(17px,1.35vw,23px); /* @kind font */
+--body-l-size-sp:16px; /* @kind font */
+--body-l-weight:500; /* @kind font */
+--body-l-lh:1.6; /* @kind font */
+--body-m-size:clamp(16px,1.2vw,20px); /* @kind font */
+--body-m-size-sp:15px; /* @kind font */
+--body-m-weight:500; /* @kind font */
+--body-m-lh:1.7; /* @kind font */
+--body-s-size:clamp(14.5px,1.05vw,18px); /* @kind font */
+--body-s-size-sp:14px; /* @kind font */
+--body-s-weight:500; /* @kind font */
+--body-s-lh:1.65; /* @kind font */
+--body-xs-size:clamp(12.5px,0.9vw,15px); /* @kind font */
+--body-xs-size-sp:12px; /* @kind font */
+--body-xs-weight:500; /* @kind font */
+--body-xs-lh:1.5; /* @kind font */
+--label-size:clamp(13px,0.95vw,16px); /* @kind font */
+--label-size-sp:12px; /* @kind font */
+--label-weight:900; /* @kind font */
+--label-lh:1.2; /* @kind font */
+--label-ls:0.08em; /* @kind font */
+--badge-size:clamp(12.5px,0.9vw,15px); /* @kind font */
+--badge-size-sp:12px; /* @kind font */
+--badge-weight:700; /* @kind font */
+--badge-lh:1.2; /* @kind font */
+--badge-ls:0.06em; /* @kind font */
+}

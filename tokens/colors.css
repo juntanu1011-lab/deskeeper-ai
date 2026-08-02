@@ -1,0 +1,25 @@
+/* design.md §5 — LP marketing palette. Independent from the app's cold/warm duo. */
+:root{
+--dk-evergreen:#042A2B;--dk-evergreen-1:#0C3A3C;--dk-evergreen-2:#164A4C;--dk-evergreen-3:#1F585B;
+--dk-teal:#3A8A8E;--dk-pacific:#5EB1BF;--dk-neon-ice:#54F2F2;
+--dk-cream:#F5F1E6;--dk-vanilla:#F3DFA2;
+--dk-tomato:#BB4430;--dk-tomato-light:#D2573C;--dk-tomato-dark:#A23A29;
+
+/* semantic (design.md §5.1 token names) */
+--base:var(--dk-evergreen);--panel:var(--dk-evergreen-1);--panel2:var(--dk-evergreen-2);
+--divider:var(--dk-evergreen-3);--border:var(--dk-teal);
+--ink:var(--dk-cream);--sub:var(--dk-pacific);--bright:var(--dk-neon-ice);
+--cta:var(--dk-tomato);--cta-border:var(--dk-tomato-light);--cta-hover:var(--dk-tomato-dark);
+--warm:var(--dk-vanilla);
+
+--surface-page:var(--base);--surface-card:var(--panel);--surface-nested:var(--panel2);
+--text-body:var(--ink);--text-muted:var(--sub);--text-accent:var(--bright);--text-highlight:var(--warm);
+--badge-bg:rgba(243,223,162,.08);--badge-border:rgba(243,223,162,.25);
+--nav-bg:rgba(4,42,43,.75);
+
+/* app-product palette — ONLY for product imagery / screenshots (design.md §12) */
+--app-base:#0A0C10;--app-ink:#EDEFF3;--app-warm-1:#FFB02E;--app-warm-2:#FF7A45;
+
+/* mascot (meerkat) — never recolored by the LP palette (design.md §13) */
+--mascot-fur:#C9A574;--mascot-cream:#EDE0C8;--mascot-patch:#3D2C22;--mascot-nose:#1A1512;--mascot-paw:#4A3527;
+}

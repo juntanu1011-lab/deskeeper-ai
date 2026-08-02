@@ -1,0 +1,12 @@
+/* Dark ground: build depth with LIGHT, not drop shadows. */
+:root{
+--glow-hover:0 0 0 1px #FFB02E,0 0 24px -6px rgba(255,176,46,.45); /* @kind shadow */
+--glow-focus:0 0 0 3px rgba(255,176,46,.35); /* @kind shadow */
+--shadow-card:0 30px 70px -30px rgba(0,0,0,.7); /* @kind shadow */
+--glow-hero:radial-gradient(closest-side,rgba(255,176,46,1),rgba(255,176,46,0)); /* @kind shadow */
+--glow-hero-opacity:.10; /* @kind other */
+--nav-blur:blur(10px); /* @kind other */
+/* Device: a soft hairline plus a deep drop, so the bezel separates from a
+   page ground that is the same colour as the screen inside it. */
+--shadow-device:0 40px 90px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.05); /* @kind shadow */
+}

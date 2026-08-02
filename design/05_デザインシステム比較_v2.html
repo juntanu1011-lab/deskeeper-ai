@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deskeeper AI — デザインシステム 4方向比較 v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Inter+Tight:wght@700;800;900&family=Instrument+Serif:ital@0;1&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --page-bg:#08090b; --page-ink:#e8e9ec; --page-sub:#8b8f98; --page-line:#1f2126;
+    --sans:-apple-system,BlinkMacSystemFont,"Inter","Hiragino Sans","Noto Sans JP",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page-bg);color:var(--page-ink);font-family:var(--sans);
+    padding:36px 24px 100px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 8px;letter-spacing:-.01em}
+  .lead{color:var(--page-sub);font-size:13px;line-height:1.85;max-width:860px;margin:0 0 28px}
+  .lead b{color:var(--page-ink)}
+  .dna{background:#101216;border:1px solid var(--page-line);border-radius:14px;
+    padding:16px 18px;font-size:12.5px;color:var(--page-sub);line-height:1.85;margin-bottom:16px}
+  .dna b{color:var(--page-ink)}
+  .howto{background:#0f1520;border:1px solid #1d2a3d;border-radius:14px;padding:16px 18px;
+    font-size:12.5px;color:#9fb2c8;line-height:1.85;margin-bottom:40px}
+  .howto b{color:#dceaf8}
+
+  .direction{margin-bottom:64px;border:1px solid var(--page-line);border-radius:22px;
+    overflow:hidden;background:#0b0c0f}
+  .direction.rec{border-color:#4a3a1a;box-shadow:0 0 0 1px rgba(255,176,46,.12),0 24px 60px -30px rgba(255,176,46,.35)}
+  .dhead{padding:20px 24px;border-bottom:1px solid var(--page-line);display:flex;
+    justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px}
+  .dname{font-size:18px;font-weight:800;letter-spacing:-.01em}
+  .badge{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    background:linear-gradient(135deg,#ffb02e,#ff7a45);color:#0a0c10;padding:4px 9px;border-radius:999px;margin-left:10px;vertical-align:2px}
+  .dtag{font-size:12px;color:var(--page-sub);max-width:520px;text-align:right;line-height:1.6}
+
+  .dbody{padding:24px;display:grid;grid-template-columns:300px 1fr;gap:32px}
+  @media (max-width:960px){.dbody{grid-template-columns:1fr}.dtag{text-align:left}}
+
+  .block-title{font-size:10px;letter-spacing:.12em;color:#5f646e;text-transform:uppercase;
+    margin:0 0 12px;font-weight:700}
+  .block{margin-bottom:26px}
+
+  /* swatches */
+  .swrow{display:flex;gap:6px;flex-wrap:wrap}
+  .sw{width:52px}
+  .sw .chip{width:52px;height:44px;border-radius:9px;border:1px solid rgba(255,255,255,.09)}
+  .sw .lbl{font-size:9px;color:var(--page-sub);margin-top:5px;line-height:1.35}
+  .sw .hex{font-size:8.5px;color:#4e525a;font-variant-numeric:tabular-nums}
+
+  /* scorecard = 出力動画のフレーム(9:16) */
+  .cards{display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap}
+  .cardwrap{text-align:center}
+  .cardcap{font-size:10px;color:#5f646e;margin-top:8px;letter-spacing:.04em}
+  .card{aspect-ratio:9/16;border-radius:14px;overflow:hidden;position:relative;
+    display:flex;flex-direction:column;justify-content:space-between}
+  .card.w200{width:200px} .card.w104{width:104px;border-radius:9px} .card.w58{width:58px;border-radius:6px}
+  .cbg{position:absolute;inset:0}
+  .cfg{position:relative;height:100%;display:flex;flex-direction:column;justify-content:space-between}
+  .ctop{display:flex;align-items:center;gap:5px}
+  .cbot{display:flex;flex-direction:column}
+  .cnum{line-height:.86;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+  .cnum sup{font-size:.34em;font-weight:700;opacity:.6;letter-spacing:0;vertical-align:.55em;margin-left:.08em}
+  .cmark{font-weight:800;letter-spacing:.04em}
+  .cwater{position:absolute;opacity:.5;font-weight:700}
+
+  /* phone stages */
+  .stages{display:flex;gap:16px;flex-wrap:wrap}
+  .phone{width:186px;aspect-ratio:9/19.5;border-radius:24px;padding:18px 14px;
+    display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+  .plabel{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+  .ptime{font-variant-numeric:tabular-nums;font-weight:700}
+
+  .meta{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:11.5px;line-height:1.6}
+  .meta dt{color:#5f646e}
+  .meta dd{margin:0;color:#b9bec7}
+
+  .pros{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 24px 22px}
+  @media (max-width:820px){.pros{grid-template-columns:1fr}}
+  .pbox{border:1px solid var(--page-line);border-radius:12px;padding:13px 15px;font-size:12px;line-height:1.8}
+  .pbox h4{margin:0 0 7px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#5f646e}
+  .pbox ul{margin:0;padding-left:16px;color:#b9bec7}
+  .pbox.good{border-color:#1d3a2c} .pbox.good h4{color:#4ed9a4}
+  .pbox.bad{border-color:#3d2620} .pbox.bad h4{color:#e0654f}
+
+  .footer{border-top:1px solid var(--page-line);padding-top:24px;margin-top:20px;
+    font-size:12.5px;color:var(--page-sub);line-height:1.9}
+  .footer b{color:var(--page-ink)}
+  code{background:#16181d;padding:1px 6px;border-radius:5px;font-size:11.5px;color:#c3c8d2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Deskeeper AI — デザインシステム 4方向比較 <span style="color:#5f646e;font-weight:400">v2</span></h1>
+<p class="lead">
+v1(<code>設計/05_デザインシステム比較.html</code>)は色見本とパーツの比較だった。<b>それだと一番大事な判断ができない。</b><br>
+UX①が要求しているのは「<b>フィードをスクロール中のサムネイルサイズで“あのアプリだ”と分かること</b>」なので、
+このv2では4方向すべてを<b>実際の出力動画フレーム(9:16)に適用して、200px / 104px / 58px の3サイズで並べた</b>。<br>
+D は A/B/C のレビューから起こした<b>新しいハイブリッド案</b>。
+</p>
+
+<div class="dna">
+<b>共通の縛り:</b> ①セッション中=冷たい / 終了後=暖かいの二態 ②失敗の赤を多用しない ③説教くさくない
+④ゲーミフィケーションのチープさを避ける ⑤スコアカードがサムネイルサイズで識別できる ⑥ミーアキャットが自然に乗る
+</div>
+<div class="howto">
+<b>見るときの手順:</b> ① まず一番右の <b>58px</b> だけを見て、4つのうちどれが一番「何かのアプリのロゴ」に見えるか。
+② 次に <b>104px</b> で、スコアの数字が読めるか。③ 最後に電話画面2枚で「冷→暖の落差」が実際に感じられるか。<br>
+<b>この順番が大事。</b> 大きいサイズで綺麗に見えるかは、この製品では二の次(プリンシプル#1=配布が最優先)。
+</div>
+
+<!-- ============ SVG mascot defs ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- 見張り(直立・目を見開く) -->
+    <symbol id="mk-watch" viewBox="0 0 64 84">
+      <path d="M46 62c7 3 11 8 11 14" stroke="currentColor" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".85"/>
+      <path d="M32 32c-9 0-13 9-13 20 0 10 2 21 4 25h18c2-4 4-15 4-25 0-11-4-20-13-20z" fill="currentColor"/>
+      <circle cx="20" cy="15" r="5.5" fill="currentColor"/>
+      <circle cx="44" cy="15" r="5.5" fill="currentColor"/>
+      <ellipse cx="32" cy="21" rx="14" ry="15" fill="currentColor"/>
+      <ellipse cx="32" cy="30.5" rx="6.5" ry="5.5" fill="currentColor"/>
+      <ellipse cx="26" cy="19" rx="5.4" ry="5" fill="#000" opacity=".55"/>
+      <ellipse cx="38" cy="19" rx="5.4" ry="5" fill="#000" opacity=".55"/>
+      <circle cx="26.6" cy="18.4" r="2.1" fill="#fff"/>
+      <circle cx="38.6" cy="18.4" r="2.1" fill="#fff"/>
+      <ellipse cx="32" cy="28.5" rx="2.4" ry="1.8" fill="#000" opacity=".6"/>
+    </symbol>
+    <!-- 讃える(崩れる・目を細める・両手上げ) -->
+    <symbol id="mk-cheer" viewBox="0 0 64 84">
+      <path d="M48 60c8 4 12 9 12 15" stroke="currentColor" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".85"/>
+      <path d="M33 34c-9 0-13 9-13 19 0 10 2 22 4 26h18c2-4 4-16 4-26 0-10-4-19-13-19z" fill="currentColor"/>
+      <path d="M21 44 L9 30" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+      <path d="M45 44 L57 30" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="20" cy="16" r="5.5" fill="currentColor"/>
+      <circle cx="45" cy="14" r="5.5" fill="currentColor"/>
+      <ellipse cx="32.5" cy="22" rx="14" ry="14.5" fill="currentColor"/>
+      <ellipse cx="33" cy="31" rx="6.5" ry="5.5" fill="currentColor"/>
+      <ellipse cx="26.5" cy="20" rx="5.4" ry="4.8" fill="#000" opacity=".5"/>
+      <ellipse cx="38.5" cy="20" rx="5.4" ry="4.8" fill="#000" opacity=".5"/>
+      <path d="M23.4 20.6q3.1-3.6 6.2 0" stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round"/>
+      <path d="M35.4 20.6q3.1-3.6 6.2 0" stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round"/>
+      <path d="M30 31.5q3 3 6 0" stroke="#000" stroke-width="2" fill="none" opacity=".5" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ================= A ================= -->
+<div class="direction" id="dirA">
+  <div class="dhead">
+    <div><span class="dname">A. Night Watch</span></div>
+    <div class="dtag">寡黙・張り詰めた・戦術的。終了時に一点だけネオングリーンが発光する</div>
+  </div>
+  <div class="dbody">
+    <div>
+      <div class="block">
+        <p class="block-title">Color</p>
+        <div class="swrow">
+          <div class="sw"><div class="chip" style="background:#0B0C0F"></div><div class="lbl">Base</div><div class="hex">0B0C0F</div></div>
+          <div class="sw"><div class="chip" style="background:#16181D"></div><div class="lbl">Panel</div><div class="hex">16181D</div></div>
+          <div class="sw"><div class="chip" style="background:#2A2D34"></div><div class="lbl">Line</div><div class="hex">2A2D34</div></div>
+          <div class="sw"><div class="chip" style="background:#8B93A3"></div><div class="lbl">Sub</div><div class="hex">8B93A3</div></div>
+          <div class="sw"><div class="chip" style="background:#EEF0F4"></div><div class="lbl">Ink</div><div class="hex">EEF0F4</div></div>
+          <div class="sw"><div class="chip" style="background:#39FF9D"></div><div class="lbl">Accent</div><div class="hex">39FF9D</div></div>
+        </div>
+      </div>
+      <div class="block">
+        <p class="block-title">Type</p>
+        <div style="font-family:'SF Mono',ui-monospace,monospace">
+          <div style="font-size:40px;font-weight:800;line-height:1;color:#EEF0F4">87<span style="font-size:15px;opacity:.5">/100</span></div>
+          <div style="font-size:14px;font-weight:700;margin-top:6px">2h 14m collected</div>
+        </div>
+        <div style="font-size:11.5px;color:var(--page-sub);line-height:1.75;margin-top:8px">等幅寄りの数字。計測器のような正確さ。</div>
+      </div>
+      <div class="block">
+        <p class="block-title">Spec</p>
+        <dl class="meta">
+          <dt>角丸</dt><dd>8 / 12(硬い)</dd>
+          <dt>間隔</dt><dd>4基準・詰め気味</dd>
+          <dt>モーション</dt><dd>直線的・短い(180ms)</dd>
+          <dt>冷→暖</dt><dd>明度と発光で表現</dd>
+        </dl>
+      </div>
+    </div>
+    <div>
+      <div class="block">
+        <p class="block-title">出力動画のスコアカード(9:16)</p>
+        <div class="cards">
+          <div class="cardwrap"><div class="card w200">
+            <div class="cbg" style="background:radial-gradient(120% 80% at 50% 20%,#1c2028,#0B0C0F)"></div>
+            <div class="cfg" style="padding:14px">
+              <div class="ctop"><svg width="18" height="24" style="color:#39FF9D"><use href="#mk-watch"/></svg><span class="cmark" style="font-size:9px;color:#8B93A3;font-family:'SF Mono',monospace">DESKEEPER</span></div>
+              <div class="cbot">
+                <div class="cnum" style="font-size:64px;font-weight:800;color:#39FF9D;font-family:'SF Mono',monospace">87<sup>/100</sup></div>
+                <div style="font-size:11px;color:#EEF0F4;font-family:'SF Mono',monospace;margin-top:8px">2h 14m · MATH</div>
+              </div>
+            </div>
+          </div><div class="cardcap">200px</div></div>
+
+          <div class="cardwrap"><div class="card w104">
+            <div class="cbg" style="background:radial-gradient(120% 80% at 50% 20%,#1c2028,#0B0C0F)"></div>
+            <div class="cfg" style="padding:8px">
+              <div class="ctop"><svg width="11" height="15" style="color:#39FF9D"><use href="#mk-watch"/></svg><span class="cmark" style="font-size:5.5px;color:#8B93A3;font-family:'SF Mono',monospace">DESKEEPER</span></div>
+              <div class="cbot">
+                <div class="cnum" style="font-size:34px;font-weight:800;color:#39FF9D;font-family:'SF Mono',monospace">87<sup>/100</sup></div>
+                <div style="font-size:6px;color:#EEF0F4;font-family:'SF Mono',monospace;margin-top:4px">2h 14m · MATH</div>
+              </div>
+            </div>
+          </div><div class="cardcap">104px</div></div>
+
+          <div class="cardwrap"><div class="card w58">
+            <div class="cbg" style="background:radial-gradient(120% 80% at 50% 20%,#1c2028,#0B0C0F)"></div>
+            <div class="cfg" style="padding:5px">
+              <div class="ctop"><svg width="7" height="9" style="color:#39FF9D"><use href="#mk-watch"/></svg></div>
+              <div class="cbot"><div class="cnum" style="font-size:19px;font-weight:800;color:#39FF9D;font-family:'SF Mono',monospace">87</div></div>
+            </div>
+          </div><div class="cardcap">58px</div></div>
+        </div>
+      </div>
+      <div class="block">
+        <p class="block-title">セッション中 → 終了後</p>
+        <div class="stages">
+          <div class="phone" style="background:#0B0C0F;border:1px solid #22242A">
+            <div class="plabel" style="color:#6B7280">REC · 見張り中</div>
+            <div style="text-align:center"><svg width="42" height="55" style="color:#3A3F49"><use href="#mk-watch"/></svg>
+              <div class="ptime" style="font-size:26px;color:#8B93A3;font-family:'SF Mono',monospace;margin-top:10px">00:42:11</div></div>
+            <div style="font-size:10px;color:#4E525A">—</div>
+          </div>
+          <div class="phone" style="background:#101215;border:1px solid #1d3a2c">
+            <div class="plabel" style="color:#39FF9D">DONE</div>
+            <div style="text-align:center"><svg width="42" height="55" style="color:#39FF9D"><use href="#mk-cheer"/></svg>
+              <div style="font-size:44px;font-weight:800;color:#39FF9D;font-family:'SF Mono',monospace;margin-top:10px">87</div></div>
+            <div style="font-size:10px;color:#8B93A3">2h 14m collected</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pros">
+    <div class="pbox good"><h4>効いていること</h4><ul>
+      <li>「監視」の世界観が最も強い。製品の機能と直結している</li>
+      <li>暗い背景 = カメラのタイムラプス映像を最も邪魔しない</li>
+      <li>58px でも数字が読める(コントラストが高い)</li>
+    </ul></div>
+    <div class="pbox bad"><h4>危ないところ</h4><ul>
+      <li><b>#39FF9D は「暖かく」ない。</b>冷→暖の反転が明度差だけになり、design.md の最重要要求が半分しか満たせない</li>
+      <li>ネオングリーン+等幅 = ハッカー / ターミナル系の既視感。学生向けとしては冷たすぎる</li>
+      <li>等幅数字はサムネイルで字幅が痩せて弱い</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ================= B ================= -->
+<div class="direction" id="dirB">
+  <div class="dhead">
+    <div><span class="dname">B. Warm Discipline</span></div>
+    <div class="dtag">紙・手触り・人間的。冷たさを"色相"でなく"沈黙"で表現する</div>
+  </div>
+  <div class="dbody">
+    <div>
+      <div class="block">
+        <p class="block-title">Color</p>
+        <div class="swrow">
+          <div class="sw"><div class="chip" style="background:#F5EFE4"></div><div class="lbl">Base(紙)</div><div class="hex">F5EFE4</div></div>
+          <div class="sw"><div class="chip" style="background:#E7DCC7"></div><div class="lbl">Panel</div><div class="hex">E7DCC7</div></div>
+          <div class="sw"><div class="chip" style="background:#2B2621"></div><div class="lbl">Ink</div><div class="hex">2B2621</div></div>
+          <div class="sw"><div class="chip" style="background:#8A7D68"></div><div class="lbl">Sub</div><div class="hex">8A7D68</div></div>
+          <div class="sw"><div class="chip" style="background:#C76B3F"></div><div class="lbl">Accent</div><div class="hex">C76B3F</div></div>
+          <div class="sw"><div class="chip" style="background:#3F6B52"></div><div class="lbl">Sub Acc</div><div class="hex">3F6B52</div></div>
+        </div>
+      </div>
+      <div class="block">
+        <p class="block-title">Type</p>
+        <div style="font-family:'Instrument Serif',Georgia,serif">
+          <div style="font-size:44px;line-height:1;color:#EEF0F4">87<span style="font-size:16px;opacity:.5">/100</span></div>
+          <div style="font-size:16px;margin-top:6px">2時間14分、続いた</div>
+        </div>
+        <div style="font-size:11.5px;color:var(--page-sub);line-height:1.75;margin-top:8px">セリフ体。日記・手帳のように記録が積み重なる印象。</div>
+      </div>
+      <div class="block">
+        <p class="block-title">Spec</p>
+        <dl class="meta">
+          <dt>角丸</dt><dd>4 / 8(ほぼ直角)</dd>
+          <dt>間隔</dt><dd>4基準・ゆったり</dd>
+          <dt>モーション</dt><dd>遅い・穏やか(400ms)</dd>
+          <dt>冷→暖</dt><dd>沈黙 → テラコッタ</dd>
+        </dl>
+      </div>
+    </div>
+    <div>
+      <div class="block">
+        <p class="block-title">出力動画のスコアカード(9:16)</p>
+        <div class="cards">
+          <div class="cardwrap"><div class="card w200">
+            <div class="cbg" style="background:linear-gradient(180deg,#F7ECE0,#EADFC9)"></div>
+            <div class="cfg" style="padding:14px">
+              <div class="ctop"><svg width="18" height="24" style="color:#2B2621"><use href="#mk-watch"/></svg><span class="cmark" style="font-size:9px;color:#8A7D68;font-family:'Instrument Serif',serif;letter-spacing:.06em">Deskeeper</span></div>
+              <div class="cbot">
+                <div class="cnum" style="font-size:66px;color:#C76B3F;font-family:'Instrument Serif',serif">87<sup style="color:#8A7D68">/100</sup></div>
+                <div style="font-size:12px;color:#2B2621;font-family:'Instrument Serif',serif;margin-top:8px">2時間14分 · 数学</div>
+              </div>
+            </div>
+          </div><div class="cardcap">200px</div></div>
+
+          <div class="cardwrap"><div class="card w104">
+            <div class="cbg" style="background:linear-gradient(180deg,#F7ECE0,#EADFC9)"></div>
+            <div class="cfg" style="padding:8px">
+              <div class="ctop"><svg width="11" height="15" style="color:#2B2621"><use href="#mk-watch"/></svg><span class="cmark" style="font-size:5.5px;color:#8A7D68;font-family:'Instrument Serif',serif">Deskeeper</span></div>
+              <div class="cbot">
+                <div class="cnum" style="font-size:35px;color:#C76B3F;font-family:'Instrument Serif',serif">87<sup style="color:#8A7D68">/100</sup></div>
+                <div style="font-size:6.5px;color:#2B2621;font-family:'Instrument Serif',serif;margin-top:4px">2時間14分 · 数学</div>
+              </div>
+            </div>
+          </div><div class="cardcap">104px</div></div>
+
+          <div class="cardwrap"><div class="card w58">
+            <div class="cbg" style="background:linear-gradient(180deg,#F7ECE0,#EADFC9)"></div>
+            <div class="cfg" style="padding:5px">
+              <div class="ctop"><svg width="7" height="9" style="color:#2B2621"><use href="#mk-watch"/></svg></div>
+              <div class="cbot"><div class="cnum" style="font-size:20px;color:#C76B3F;font-family:'Instrument Serif',serif">87</div></div>
+            </div>
+          </div><div class="cardcap">58px</div></div>
+        </div>
+      </div>
+      <div class="block">
+        <p class="block-title">セッション中 → 終了後</p>
+        <div class="stages">
+          <div class="phone" style="background:#E9E2D2;border:1px solid #D8CBB0">
+            <div class="plabel" style="color:#6B5F4D">見張り中</div>
+            <div style="text-align:center"><svg width="42" height="55" style="color:#A2957E"><use href="#mk-watch"/></svg>
+              <div class="ptime" style="font-size:26px;color:#4A4032;font-family:'Instrument Serif',serif;margin-top:10px">00:42:11</div></div>
+            <div style="font-size:11px;color:#6B5F4D;font-family:'Instrument Serif',serif">静かに、続けて。</div>
+          </div>
+          <div class="phone" style="background:#F7ECE0;border:1px solid #E3C9A8">
+            <div class="plabel" style="color:#C76B3F">できた</div>
+            <div style="text-align:center"><svg width="42" height="55" style="color:#C76B3F"><use href="#mk-cheer"/></svg>
+              <div style="font-size:46px;color:#C76B3F;font-family:'Instrument Serif',serif;margin-top:10px">87</div></div>
+            <div style="font-size:11px;color:#8A7D68;font-family:'Instrument Serif',serif">2時間14分、続いた</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pros">
+    <div class="pbox good"><h4>効いていること</h4><ul>
+      <li>studytok のフィードで<b>唯一「暗くない」= 逆に目立つ</b></li>
+      <li>説教くささ・チープさから最も遠い。大人っぽい</li>
+      <li>「記録が積み重なる」という UX④の要求に絵として合っている</li>
+    </ul></div>
+    <div class="pbox bad"><h4>危ないところ</h4><ul>
+      <li><b>セッション中が冷たくない。</b>紙の明るい背景で「張り詰めた空気」は作れない → プリンシプル#2の落差が消える</li>
+      <li><b>致命:</b> 出力動画の背景は<b>実際のカメラ映像(暗い部屋)</b>。明るい紙のUIはその上に乗らない</li>
+      <li>セリフ体は 58px で読めない。ASO/サムネで不利</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ================= C ================= -->
+<div class="direction" id="dirC">
+  <div class="dhead">
+    <div><span class="dname">C. Neon StudyTok</span></div>
+    <div class="dtag">Z世代SNS感度。彩度高め・太字・動画で止めても伝わる</div>
+  </div>
+  <div class="dbody">
+    <div>
+      <div class="block">
+        <p class="block-title">Color</p>
+        <div class="swrow">
+          <div class="sw"><div class="chip" style="background:#120A24"></div><div class="lbl">Base</div><div class="hex">120A24</div></div>
+          <div class="sw"><div class="chip" style="background:#1F1339"></div><div class="lbl">Panel</div><div class="hex">1F1339</div></div>
+          <div class="sw"><div class="chip" style="background:#BDA6FF"></div><div class="lbl">Sub</div><div class="hex">BDA6FF</div></div>
+          <div class="sw"><div class="chip" style="background:#FFFFFF"></div><div class="lbl">Ink</div><div class="hex">FFFFFF</div></div>
+          <div class="sw"><div class="chip" style="background:#C8FF4D"></div><div class="lbl">Accent</div><div class="hex">C8FF4D</div></div>
+          <div class="sw"><div class="chip" style="background:#FF4D94"></div><div class="lbl">Accent2</div><div class="hex">FF4D94</div></div>
+        </div>
+      </div>
+      <div class="block">
+        <p class="block-title">Type</p>
+        <div style="font-family:'Archivo Black','Arial Black',sans-serif">
+          <div style="font-size:42px;line-height:1;color:#C8FF4D">87<span style="font-size:15px;opacity:.6">/100</span></div>
+          <div style="font-size:15px;color:#fff;margin-top:8px">2H 14M LOCKED IN</div>
+        </div>
+        <div style="font-size:11.5px;color:var(--page-sub);line-height:1.75;margin-top:8px">極太・大文字。1秒で読める強さ優先。</div>
+      </div>
+      <div class="block">
+        <p class="block-title">Spec</p>
+        <dl class="meta">
+          <dt>角丸</dt><dd>16 / 24(丸い)</dd>
+          <dt>間隔</dt><dd>4基準・詰める</dd>
+          <dt>モーション</dt><dd>跳ねる・速い(220ms spring)</dd>
+          <dt>冷→暖</dt><dd>紫 → ライム+ピンク</dd>
+        </dl>
+      </div>
+    </div>
+    <div>
+      <div class="block">
+        <p class="block-title">出力動画のスコアカード(9:16)</p>
+        <div class="cards">
+          <div class="cardwrap"><div class="card w200">
+            <div class="cbg" style="background:linear-gradient(150deg,#1F1339,#2A1550 55%,#3a1140)"></div>
+            <div class="cfg" style="padding:14px">
+              <div class="ctop"><svg width="18" height="24" style="color:#C8FF4D"><use href="#mk-watch"/></svg><span class="cmark" style="font-size:9px;color:#BDA6FF;font-family:'Archivo Black',sans-serif">DESKEEPER</span></div>
+              <div class="cbot">
+                <div class="cnum" style="font-size:70px;color:#C8FF4D;font-family:'Archivo Black',sans-serif">87<sup style="color:#FF4D94">/100</sup></div>
+                <div style="font-size:11px;color:#fff;font-family:'Archivo Black',sans-serif;margin-top:8px">2H 14M LOCKED IN</div>
+              </div>
+            </div>
+          </div><div class="cardcap">200px</div></div>
+
+          <div class="cardwrap"><div class="card w104">
+            <div class="cbg" style="background:linear-gradient(150deg,#1F1339,#2A1550 55%,#3a1140)"></div>
+            <div class="cfg" style="padding:8px">
+              <div class="ctop"><svg width="11" height="15" style="color:#C8FF4D"><use href="#mk-watch"/></svg><span class="cmark" style="font-size:5px;color:#BDA6FF;font-family:'Archivo Black',sans-serif">DESKEEPER</span></div>
+              <div class="cbot">
+                <div class="cnum" style="font-size:37px;color:#C8FF4D;font-family:'Archivo Black',sans-serif">87<sup style="color:#FF4D94">/100</sup></div>
+                <div style="font-size:5.5px;color:#fff;font-family:'Archivo Black',sans-serif;margin-top:4px">2H 14M LOCKED IN</div>
+              </div>
+            </div>
+          </div><div class="cardcap">104px</div></div>
+
+          <div class="cardwrap"><div class="card w58">
+            <div class="cbg" style="background:linear-gradient(150deg,#1F1339,#2A1550 55%,#3a1140)"></div>
+            <div class="cfg" style="padding:5px">
+              <div class="ctop"><svg width="7" height="9" style="color:#C8FF4D"><use href="#mk-watch"/></svg></div>
+              <div class="cbot"><div class="cnum" style="font-size:21px;color:#C8FF4D;font-family:'Archivo Black',sans-serif">87</div></div>
+            </div>
+          </div><div class="cardcap">58px</div></div>
+        </div>
+      </div>
+      <div class="block">
+        <p class="block-title">セッション中 → 終了後</p>
+        <div class="stages">
+          <div class="phone" style="background:#150C2B;border:1px solid #2D1F4F">
+            <div class="plabel" style="color:#8F7FC7">● LIVE</div>
+            <div style="text-align:center"><svg width="42" height="55" style="color:#3D2E68"><use href="#mk-watch"/></svg>
+              <div class="ptime" style="font-size:26px;color:#BDA6FF;font-family:'Archivo Black',sans-serif;margin-top:10px">00:42:11</div></div>
+            <div style="font-size:10px;color:#BDA6FF;font-weight:700">NO PHONE ZONE</div>
+          </div>
+          <div class="phone" style="background:linear-gradient(150deg,#1F1339,#2A1550);border:1px solid #FF4D94">
+            <div class="plabel" style="color:#FF4D94">✓ DONE</div>
+            <div style="text-align:center"><svg width="42" height="55" style="color:#C8FF4D"><use href="#mk-cheer"/></svg>
+              <div style="font-size:48px;color:#C8FF4D;font-family:'Archivo Black',sans-serif;margin-top:10px">87</div></div>
+            <div style="font-size:10px;color:#fff;font-family:'Archivo Black',sans-serif">2H 14M LOCKED IN</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pros">
+    <div class="pbox good"><h4>効いていること</h4><ul>
+      <li>104px / 58px での可読性は<b>4方向で最強</b></li>
+      <li>ターゲット(studytok圏の学生)の感度と完全に一致</li>
+    </ul></div>
+    <div class="pbox bad"><h4>危ないところ</h4><ul>
+      <li><b>致命:</b> この見た目は studytok に<b>すでに大量にある</b>。「目立つ」けど「うちのアプリだと分からない」= UX①の要求を実は満たさない</li>
+      <li>紫+ライム+ピンクは design.md の禁止事項「ゲーミフィケーションのチープさ」に真正面から当たる</li>
+      <li>セッション中も彩度が高く、「冷たい」にならない</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ================= D ================= -->
+<div class="direction rec" id="dirD">
+  <div class="dhead">
+    <div><span class="dname">D. Keeper<span class="badge">推奨・新案</span></span></div>
+    <div class="dtag">A の構造を土台に、アクセントを「色温度が実際に変わる」青灰 → 琥珀に置き換えたハイブリッド。<br>冷たさ=青、暖かさ=琥珀。design.md の「二態」を色相で literal に実装する</div>
+  </div>
+  <div class="dbody">
+    <div>
+      <div class="block">
+        <p class="block-title">Color — 冷(セッション中)</p>
+        <div class="swrow">
+          <div class="sw"><div class="chip" style="background:#0A0C10"></div><div class="lbl">Base</div><div class="hex">0A0C10</div></div>
+          <div class="sw"><div class="chip" style="background:#14171D"></div><div class="lbl">Panel</div><div class="hex">14171D</div></div>
+          <div class="sw"><div class="chip" style="background:#232833"></div><div class="lbl">Line</div><div class="hex">232833</div></div>
+          <div class="sw"><div class="chip" style="background:#7A828F"></div><div class="lbl">Sub</div><div class="hex">7A828F</div></div>
+          <div class="sw"><div class="chip" style="background:#7C93A8"></div><div class="lbl">Cold</div><div class="hex">7C93A8</div></div>
+        </div>
+      </div>
+      <div class="block">
+        <p class="block-title">Color — 暖(終了後)</p>
+        <div class="swrow">
+          <div class="sw"><div class="chip" style="background:#FFB02E"></div><div class="lbl">Warm</div><div class="hex">FFB02E</div></div>
+          <div class="sw"><div class="chip" style="background:#FF7A45"></div><div class="lbl">Warm Deep</div><div class="hex">FF7A45</div></div>
+          <div class="sw"><div class="chip" style="background:linear-gradient(135deg,#FFB02E,#FF7A45)"></div><div class="lbl">Grad</div><div class="hex">↗︎</div></div>
+          <div class="sw"><div class="chip" style="background:#EDEFF3"></div><div class="lbl">Ink</div><div class="hex">EDEFF3</div></div>
+          <div class="sw"><div class="chip" style="background:#D8654E"></div><div class="lbl">Warn(稀)</div><div class="hex">D8654E</div></div>
+        </div>
+      </div>
+      <div class="block">
+        <p class="block-title">Type</p>
+        <div style="font-family:'Inter Tight',Inter,sans-serif">
+          <div style="font-size:46px;font-weight:900;line-height:1;letter-spacing:-.03em;color:#EDEFF3;font-variant-numeric:tabular-nums">87<span style="font-size:15px;font-weight:800;opacity:.5">/100</span></div>
+          <div style="font-size:15px;font-weight:800;margin-top:8px;letter-spacing:-.01em">2h 14m at the desk</div>
+        </div>
+        <div style="font-size:11.5px;color:var(--page-sub);line-height:1.75;margin-top:8px">
+          <b style="color:#b9bec7">Inter Tight 900</b>(スコア数字・見出し / tabular-nums)<br>
+          <b style="color:#b9bec7">Inter 400–700</b>(本文)<br>
+          幾何学的で太いが、Archivo Black のような"叫び"にはならない。expo-google-fonts で両方入る。
+        </div>
+      </div>
+      <div class="block">
+        <p class="block-title">Spec</p>
+        <dl class="meta">
+          <dt>角丸</dt><dd>8 / 14 / 20 / 999</dd>
+          <dt>間隔</dt><dd>4・8・12・16・24・32・48</dd>
+          <dt>モーション</dt><dd>冷→暖の反転 640ms<br><code>cubic-bezier(.16,1,.3,1)</code></dd>
+          <dt>冷→暖</dt><dd><b>色温度そのものが変わる</b><br>青灰 #7C93A8 → 琥珀 #FFB02E</dd>
+        </dl>
+      </div>
+    </div>
+    <div>
+      <div class="block">
+        <p class="block-title">出力動画のスコアカード(9:16) — 実際のカメラ映像の上に乗る想定</p>
+        <div class="cards">
+          <div class="cardwrap"><div class="card w200">
+            <div class="cbg" style="background:linear-gradient(200deg,#2a2620 0%,#191b22 45%,#0A0C10 100%)"></div>
+            <div class="cbg" style="background:linear-gradient(0deg,rgba(10,12,16,.92) 0%,rgba(10,12,16,.15) 55%,rgba(10,12,16,.6) 100%)"></div>
+            <div class="cfg" style="padding:14px">
+              <div class="ctop"><svg width="19" height="25" style="color:#FFB02E"><use href="#mk-watch"/></svg><span class="cmark" style="font-size:9.5px;color:#EDEFF3;font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:.02em">Deskeeper</span></div>
+              <div class="cbot">
+                <div class="cnum" style="font-size:74px;font-weight:900;color:#FFB02E;font-family:'Inter Tight',sans-serif">87<sup style="color:#EDEFF3">/100</sup></div>
+                <div style="height:3px;width:66%;background:linear-gradient(90deg,#FFB02E,#FF7A45);border-radius:999px;margin:9px 0 8px"></div>
+                <div style="font-size:11.5px;color:#EDEFF3;font-family:'Inter Tight',sans-serif;font-weight:800">2h 14m · Math</div>
+              </div>
+            </div>
+          </div><div class="cardcap">200px</div></div>
+
+          <div class="cardwrap"><div class="card w104">
+            <div class="cbg" style="background:linear-gradient(200deg,#2a2620 0%,#191b22 45%,#0A0C10 100%)"></div>
+            <div class="cbg" style="background:linear-gradient(0deg,rgba(10,12,16,.92) 0%,rgba(10,12,16,.15) 55%,rgba(10,12,16,.6) 100%)"></div>
+            <div class="cfg" style="padding:8px">
+              <div class="ctop"><svg width="12" height="16" style="color:#FFB02E"><use href="#mk-watch"/></svg><span class="cmark" style="font-size:5.5px;color:#EDEFF3;font-family:'Inter Tight',sans-serif;font-weight:800">Deskeeper</span></div>
+              <div class="cbot">
+                <div class="cnum" style="font-size:39px;font-weight:900;color:#FFB02E;font-family:'Inter Tight',sans-serif">87<sup style="color:#EDEFF3">/100</sup></div>
+                <div style="height:2px;width:66%;background:linear-gradient(90deg,#FFB02E,#FF7A45);border-radius:999px;margin:5px 0 4px"></div>
+                <div style="font-size:6px;color:#EDEFF3;font-family:'Inter Tight',sans-serif;font-weight:800">2h 14m · Math</div>
+              </div>
+            </div>
+          </div><div class="cardcap">104px</div></div>
+
+          <div class="cardwrap"><div class="card w58">
+            <div class="cbg" style="background:linear-gradient(200deg,#2a2620 0%,#191b22 45%,#0A0C10 100%)"></div>
+            <div class="cbg" style="background:linear-gradient(0deg,rgba(10,12,16,.92) 0%,rgba(10,12,16,.15) 55%,rgba(10,12,16,.6) 100%)"></div>
+            <div class="cfg" style="padding:5px">
+              <div class="ctop"><svg width="8" height="10.5" style="color:#FFB02E"><use href="#mk-watch"/></svg></div>
+              <div class="cbot"><div class="cnum" style="font-size:23px;font-weight:900;color:#FFB02E;font-family:'Inter Tight',sans-serif">87</div>
+                <div style="height:1.5px;width:66%;background:linear-gradient(90deg,#FFB02E,#FF7A45);border-radius:999px;margin-top:3px"></div></div>
+            </div>
+          </div><div class="cardcap">58px</div></div>
+        </div>
+      </div>
+      <div class="block">
+        <p class="block-title">セッション中 → 終了後(ここが色温度で反転する)</p>
+        <div class="stages">
+          <div class="phone" style="background:radial-gradient(120% 70% at 50% 0%,#151a22,#0A0C10);border:1px solid #232833">
+            <div class="plabel" style="color:#7C93A8">● 見張り中</div>
+            <div style="text-align:center"><svg width="44" height="58" style="color:#39424F"><use href="#mk-watch"/></svg>
+              <div class="ptime" style="font-size:27px;color:#7C93A8;font-family:'Inter Tight',sans-serif;font-weight:800;margin-top:12px;letter-spacing:-.02em">00:42:11</div></div>
+            <div style="font-size:10px;color:#4A5260;font-weight:600">触らない。</div>
+          </div>
+          <div class="phone" style="background:radial-gradient(130% 65% at 50% 22%,#2e2114,#12100e 70%);border:1px solid #4a3a1a">
+            <div class="plabel" style="color:#FFB02E">終わった</div>
+            <div style="text-align:center"><svg width="44" height="58" style="color:#FFB02E"><use href="#mk-cheer"/></svg>
+              <div style="font-size:50px;font-weight:900;color:#FFB02E;font-family:'Inter Tight',sans-serif;margin-top:12px;letter-spacing:-.03em">87</div>
+              <div style="height:3px;width:56px;margin:8px auto 0;background:linear-gradient(90deg,#FFB02E,#FF7A45);border-radius:999px"></div></div>
+            <div style="font-size:10.5px;color:#EDEFF3;font-weight:700">2h 14m at the desk</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pros">
+    <div class="pbox good"><h4>効いていること</h4><ul>
+      <li><b>冷→暖が色温度で literal に起きる。</b>青灰→琥珀。design.md の最重要要求を唯一そのまま満たす</li>
+      <li><b>琥珀は studytok のフィードで空いている色。</b>紫・ライム・ピンク・緑は飽和している = 識別性(UX①)が本当に立つ</li>
+      <li>暗い背景なので<b>実際のカメラ映像の上に成立する</b>(B が落ちるのはここ)</li>
+      <li>58px で「琥珀の数字 + ミーアキャットの影」= ロゴとして読める</li>
+      <li>Inter Tight 900 は太いのにチープでない。<code>expo-google-fonts</code> で即入る = 8月中旬の締切に効く</li>
+    </ul></div>
+    <div class="pbox bad"><h4>危ないところ / 確認したいこと</h4><ul>
+      <li>琥珀は Duolingo・Todoist 等の「明るい橙」と近い距離にある。<b>彩度を上げすぎるとチープに落ちる</b>ので #FFB02E より派手にしない</li>
+      <li>暗い方に寄っているので、<b>オンボーディングとペイウォールが重く見えるリスク</b>。ここだけ warm 側を主役にして軽くする必要がある</li>
+      <li>A と比べると「監視」の緊張感はやや弱い。セッション中の青灰をもう少し冷たくする調整余地はある</li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="footer">
+<b>決めたいこと(この4つ):</b><br>
+① どの方向で行くか(A / B / C / D、または「Dの色 + Cのタイポ」のような混ぜ方)<br>
+② スコア数字のフォント(Inter Tight 900 / 等幅 / Archivo Black)<br>
+③ マスコットの絵柄タッチ(このSVGは<b>フラットなシルエット</b>で描いた。立体・手描きも選べる)<br>
+④ マスコットの色(D案では琥珀 = アクセント色と同一にしている)<br><br>
+決まったら <code>deskeeper-ai/design/design.md</code> を確定版にして、<code>tokens/</code> に実装用のトークンを吐く。
+</div>
+
+</div>
+</body>
+</html>

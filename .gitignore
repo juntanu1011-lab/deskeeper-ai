@@ -1,0 +1,32 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+build/
+
+# npm cache — the global ~/.npm is root-owned and broken on this machine, so
+# installs run with `--cache ./web/.npm-cache`. Never commit it.
+.npm-cache/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# macOS
+.DS_Store
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

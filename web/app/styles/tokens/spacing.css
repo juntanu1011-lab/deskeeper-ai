@@ -1,0 +1,9 @@
+/* design.md §7 — 4-based, with long-scroll additions */
+:root{
+--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-8:32px;
+--space-12:48px;--space-16:64px;--space-24:96px;--space-32:128px;
+--section-gap:96px;--section-gap-sp:64px;
+--block-gap:32px;--block-gap-lg:48px;
+--card-pad:24px;--card-pad-sp:20px;
+--page-margin:24px;--content-max:1080px;--form-max:440px;
+}

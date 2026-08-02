@@ -1,0 +1,57 @@
+/* Responsive grid columns for the landing page's className-driven layouts
+   (LandingPage.tsx: .dk-problem, .dk-steps, .dk-showcase). design.md §15:
+   >=900px: Problem is text | mascot (mascot on the right), Steps is 4-up,
+   Showcase is 2-col; 520-900px: Steps is 2x2; <520px: everything is 1 column. */
+
+/* Hero headline: the copy is three short sentences, so break on sentence
+   boundaries instead of letting the browser wrap mid-sentence (which left
+   "Get" dangling at the end of line 2). Each line is its own block; on very
+   narrow screens a line may still wrap internally, which is fine. */
+.dk-hero-title {
+  text-wrap: balance;
+}
+
+.dk-hero-line {
+  display: block;
+}
+
+/* Below this width a sentence no longer fits on one line, so forcing the break
+   would strand "down." / "proof." alone. Let the text reflow naturally instead
+   (the h1's text-wrap: balance then evens the lines out). */
+@media (max-width: 560px) {
+  .dk-hero-line {
+    display: inline;
+  }
+}
+
+.dk-problem {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .dk-problem {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 42%);
+  }
+}
+
+.dk-steps {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 520px) {
+  .dk-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 900px) {
+  .dk-steps {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.dk-showcase {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .dk-showcase {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}

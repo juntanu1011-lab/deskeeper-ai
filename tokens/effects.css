@@ -1,0 +1,9 @@
+/* design.md §9 — dark ground: build depth with LIGHT, not drop shadows */
+:root{
+--glow-hover:0 0 0 1px #54F2F2,0 0 24px -6px rgba(84,242,242,.45); /* @kind shadow */
+--glow-focus:0 0 0 3px rgba(84,242,242,.35); /* @kind shadow */
+--shadow-card:0 30px 70px -30px rgba(0,0,0,.7); /* @kind shadow */
+--glow-hero:radial-gradient(closest-side,rgba(84,242,242,1),rgba(84,242,242,0)); /* @kind shadow */
+--glow-hero-opacity:.08; /* @kind other */
+--nav-blur:blur(10px); /* @kind other */
+}
