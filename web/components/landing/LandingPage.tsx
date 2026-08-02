@@ -1,6 +1,6 @@
 "use client";
 
-/* Deskeeper AI waitlist LP — section composition (design.md §14).
+/* Deskeeper waitlist LP — section composition (design.md §14).
    Copy is verbatim from the confirmed English draft; do not paraphrase. */
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
 import { Nav } from "../navigation/Nav";
@@ -149,12 +149,12 @@ function Hero({ onJoin }: { onJoin: (email: string) => void }) {
               textWrap: "balance",
             }}
           >
-            Deskeeper AI turns your phone into a camera that watches you study — then hands you back a video worth
+            Deskeeper turns your phone into a camera that watches you study — then hands you back a video worth
             posting.
           </p>
         </Reveal>
         <Reveal delay={210} style={{ marginTop: "var(--space-4)", width: "100%", display: "flex", justifyContent: "center" }}>
-          <WaitlistForm buttonLabel="Notify me" microcopy="No spam. One email when we launch. That's it." onSubmit={onJoin} />
+          <WaitlistForm buttonLabel="Notify me" source="hero" microcopy="No spam. One email when we launch. That's it." onSubmit={onJoin} />
         </Reveal>
       </div>
     </section>
@@ -375,7 +375,7 @@ function WaitlistCta({
           </p>
         </Reveal>
         <Reveal delay={210} style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-          <WaitlistForm buttonLabel="Join the Waitlist" onSubmit={onJoin} />
+          <WaitlistForm buttonLabel="Join the Waitlist" source="cta" onSubmit={onJoin} />
         </Reveal>
       </div>
     </section>

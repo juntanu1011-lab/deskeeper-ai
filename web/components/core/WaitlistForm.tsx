@@ -7,11 +7,16 @@ import { Mascot } from "../brand/Mascot";
 
 /* design.md §11 — Input + Primary side by side inside one pill container (desktop),
    stacked under 520px. Max width 440px. On submit the form is REPLACED in place by a
-   success message — never a page transition. */
+   success message — never a page transition.
+   Submits to /api/waitlist (Supabase behind it). Success only flips after the
+   server confirms — an optimistic flip here would lie to the user when the
+   insert fails, and a waitlist has no way to recover that email later. */
 export interface WaitlistFormProps {
   buttonLabel?: string;
   microcopy?: string;
   stacked?: boolean;
+  /** Where on the page this form sits — stored alongside the email. */
+  source?: string;
   onSubmit?: (email: string) => void;
   successMessage?: string;
 }
@@ -20,17 +25,38 @@ export function WaitlistForm({
   buttonLabel = "Notify me",
   microcopy,
   stacked = false,
+  source = "lp",
   onSubmit,
   successMessage = "You're on the list. We'll email you once — the day it's ready.",
 }: WaitlistFormProps) {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const submit = (e: FormEvent<HTMLFormElement>) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!email.includes("@")) return;
-    setDone(true);
-    onSubmit?.(email);
+    if (!email.includes("@") || busy) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email, source }),
+      });
+      if (!res.ok) {
+        const body = (await res.json().catch(() => null)) as { error?: string } | null;
+        setError(body?.error ?? "Something went wrong. Try again?");
+        return;
+      }
+      setDone(true);
+      onSubmit?.(email);
+    } catch {
+      setError("Network hiccup — try again?");
+    } finally {
+      setBusy(false);
+    }
   };
 
   if (done) {
@@ -83,10 +109,22 @@ export function WaitlistForm({
         }}
       >
         <Input value={email} onChange={(e) => setEmail(e.target.value)} />
-        <Button type="submit" style={stacked ? { width: "100%" } : undefined}>
-          {buttonLabel}
+        <Button type="submit" disabled={busy} style={stacked ? { width: "100%" } : undefined}>
+          {busy ? "Joining…" : buttonLabel}
         </Button>
       </form>
+      {error && (
+        <p
+          role="alert"
+          style={{
+            margin: 0,
+            font: "500 var(--body-xs-size)/var(--body-xs-lh) var(--font-body)",
+            color: "var(--ink)",
+          }}
+        >
+          {error}
+        </p>
+      )}
       {microcopy && (
         <p
           style={{

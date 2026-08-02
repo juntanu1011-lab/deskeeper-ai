@@ -26,10 +26,37 @@ const interTight = Inter_Tight({
   display: "swap",
 });
 
+/* Absolute URL base for OG/Twitter images. NEXT_PUBLIC_SITE_URL wins (set it
+   when the real domain lands); falls back to the Vercel production URL, then
+   localhost for dev. */
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
+const title = "Deskeeper — Put your phone down. Get watched. Get proof.";
+const description =
+  "Deskeeper turns your phone into a camera that watches you study — then hands you back a video worth posting. Join the waitlist.";
+
 export const metadata: Metadata = {
-  title: "Deskeeper AI — Put your phone down. Get watched. Get proof.",
-  description:
-    "Deskeeper AI turns your phone into a camera that watches you study — then hands you back a video worth posting. Join the waitlist.",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: "/",
+    siteName: "Deskeeper",
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Deskeeper — focus score 87" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({

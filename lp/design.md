@@ -1,4 +1,4 @@
-# design.md — Deskeeper AI ランディングページ(ウェイトリスト)
+# design.md — Deskeeper ランディングページ(ウェイトリスト)
 
 > **このファイルの使い方:** Claude Design(claude.ai)で新規デザインシステムを作り、このファイルをそのまま投入する。
 > 併せて `lp/tokens.json`(数値トークン)とマスコット画像を Brand Assets として追加する。
@@ -92,7 +92,6 @@
 | `ctaBorder` | `#FFC661` | — | CTAボタンの枠線(ホバーグローとの境目を保つ) |
 | `ctaHover` | `#E08A12` | — | CTAボタンのホバー/押下 |
 | `warm` | `#FFB02E` | Amber | `bright` と同一。琥珀は1色しかない |
-| `wordmarkAccent` | `#C08A2E` | — | ワードマークの「AI」だけに使う、一段落とした琥珀 |
 | `deviceBezel` | `#31353F` → `#1C2028` | — | 端末フレーム(§12) |
 
 ### 5.2 コントラスト実測値(WCAG 2.1・実測)
@@ -103,7 +102,6 @@
 | `bright` on `base` | 10.72 | AAA |
 | `sub` on `base` | 6.57 | AA |
 | `sub` on `panel` | 6.13 | AA |
-| `wordmarkAccent` on `base` | 6.45 | AA |
 | `ctaInk` on `cta`(ボタン文字) | 10.15 | AAA |
 | `cta` 塗り vs `base`(UI境界) | 10.72 | 3.0 を大きく上回る |
 | `border` vs `base`(UI境界) | 3.27 | 3.0 を満たす |
@@ -300,14 +298,14 @@ LPでも**アプリ本体と完全に同じ配色**を使う(LPパレットで�
 ## 14. ページ構成とコピー(英語・確定ドラフト)
 
 ### 14.1 Nav
-- 左: マスコット + `Deskeeper AI`
+- 左: マスコット + `Deskeeper`
 - 右: `Join the Waitlist`(Button/Primary)
 
 ### 14.2 Hero
 - Badge: `Launching soon — iOS first`
 - 見出し(`display-xl`): **Put your phone down. Get watched. Get proof.**
   - 「watched」だけ `bright` で色を変える
-- サブ(`body-l`・`sub`): Deskeeper AI turns your phone into a camera that watches you study — then hands you back a video worth posting.
+- サブ(`body-l`・`sub`): Deskeeper turns your phone into a camera that watches you study — then hands you back a video worth posting.
 - Waitlist Form(プレースホルダ `your@email.com` / ボタン `Notify me`)
 - マイクロコピー(`body-xs`・`sub`): No spam. One email when we launch. That's it.
 
@@ -351,7 +349,7 @@ LPでも**アプリ本体と完全に同じ配色**を使う(LPパレットで�
 | What if I can't prop my phone up somewhere? | There's a Simple Mode — no camera, just a timer. You still get a video, just without the footage: a focus graph instead. |
 
 ### 14.8 Footer
-マスコット + `Deskeeper AI` / リンク: `X / Twitter`・`Privacy`
+マスコット + `Deskeeper` / リンク: `X / Twitter`・`Privacy`
 
 ---
 
@@ -384,7 +382,7 @@ Get watched. Get proof.
 
 ## 16. Claude Design への依頼文(このまま貼ってよい)
 
-> 上記の design.md をもとに、Deskeeper AI というアプリのウェイトリスト獲得用ランディングページを1ページで作ってください。
+> 上記の design.md をもとに、Deskeeper というアプリのウェイトリスト獲得用ランディングページを1ページで作ってください。
 > ほぼ黒(#0A0C10)の地に、琥珀(#FFB02E)だけが色として効く2色構成です。琥珀は「フォーカススコア」と
 > 「押せるもの」にだけ使い、それ以外の強調はクリームの明度差で作ってください。
 > §5.3 の制約(CTAボタンの文字は #1A1206。クリームだとコントラスト1.59で読めない)と、
@@ -403,8 +401,9 @@ Get watched. Get proof.
 - [x] Heroの折り返しの修正
 - [ ] スコア画面のレイアウト比較(数字ドーン / 円形ゲージ / ランク / 波形)→ 決定後に `ScoreCard` の中身を作り直す
 - [ ] `mascot-proud.png` を `web/public/mascot/` に配置(送信成功ステートが現状404)
-- [ ] Supabase プロジェクトの新規作成 + `waitlist` テーブル(email, created_at, source)
-- [ ] Supabase接続 → フォーム送信の実装
+- [x] Supabase プロジェクトの新規作成 + `waitlist` テーブル(2026-08-02。ref `bwjhqbmoljnwpbbwmhut`、東京。
+      RLS有効・ポリシー無しで、書き込みは service role 経由の `/api/waitlist` のみ。マイグレーションは `supabase/migrations/`)
+- [x] Supabase接続 → フォーム送信の実装(登録200 / 不正メール400 / 重複200 をE2Eで確認済み)
 - [ ] OG画像(SNSシェア時のプレビュー)
 - [ ] 独自ドメイン
 

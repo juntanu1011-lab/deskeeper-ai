@@ -1,4 +1,4 @@
-/* Deskeeper AI palette — Black + Amber.
+/* Deskeeper palette — Black + Amber.
    The LP and the app share one palette (decided 2026-08-02). Only two hues are
    in play: a near-black ground and amber. Everything else is a neutral step
    between cream and grey. Keep it that way — the restraint is the brand.
@@ -24,9 +24,9 @@
 /* CTA sits on bright amber, so its label must be near-black, not --ink. */
 --cta-ink:#1A1206;
 --warm:var(--dk-amber);
-/* Wordmark "AI" — a quieter amber so the lockup reads as brand without
-   competing with the CTA button sitting a few pixels away in the nav. */
---wordmark-accent:var(--dk-amber-muted);
+/* --wordmark-accent removed 2026-08-03: it existed only to tint the "AI" in the
+   old "Deskeeper AI" lockup, and the name is now just "Deskeeper". The raw
+   --dk-amber-muted stays in the palette above if a quieter amber is needed. */
 
 --surface-page:var(--base);--surface-card:var(--panel);--surface-nested:var(--panel2);
 --text-body:var(--ink);--text-muted:var(--sub);--text-accent:var(--bright);--text-highlight:var(--warm);
