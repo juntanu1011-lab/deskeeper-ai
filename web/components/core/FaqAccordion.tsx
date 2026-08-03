@@ -13,17 +13,21 @@ function Row({
   a,
   open,
   onToggle,
+  id,
 }: {
   q: string;
   a: string;
   open: boolean;
   onToggle: () => void;
+  id: string;
 }) {
   const [hover, setHover] = useState(false);
   return (
     <div style={{ borderBottom: "1px solid var(--divider)" }}>
       <button
         onClick={onToggle}
+        aria-expanded={open}
+        aria-controls={id}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         style={{
@@ -61,6 +65,8 @@ function Row({
         </span>
       </button>
       <div
+        id={id}
+        role="region"
         style={{
           display: "grid",
           gridTemplateRows: open ? "1fr" : "0fr",
@@ -97,7 +103,14 @@ export function FaqAccordion({
   return (
     <div style={{ borderTop: "1px solid var(--divider)" }}>
       {items.map((it, i) => (
-        <Row key={i} q={it.q} a={it.a} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} />
+        <Row
+          key={i}
+          id={`faq-panel-${i}`}
+          q={it.q}
+          a={it.a}
+          open={open === i}
+          onToggle={() => setOpen(open === i ? -1 : i)}
+        />
       ))}
     </div>
   );

@@ -84,7 +84,11 @@ function Hero({ onJoin }: { onJoin: (email: string) => void }) {
       style={{
         position: "relative",
         overflow: "hidden",
-        minHeight: "calc(100svh - 62px)",
+        /* Nav height: 16px padding top and bottom around a 30px Wordmark ("l")
+           whose 38px mascot slot is the tallest thing in the row — ~68px, not
+           the 62px this was set to when the wordmark was still "m". Update
+           together with Wordmark's size or the page gains a stray scrollbar. */
+        minHeight: "calc(100svh - 68px)",
         display: "grid",
         alignItems: "center",
         paddingTop: "clamp(48px,5vw,88px)",
@@ -324,8 +328,11 @@ function Showcase() {
                 <span style={{ font: "800 var(--display-s-size)/var(--display-s-lh) var(--font-display)", color: "var(--ink)" }}>
                   No camera? Simple Mode
                 </span>
+                {/* Simple Mode has no camera, so it has no focus signal and therefore no
+                    score — saying otherwise would put a fabricated number on a video that
+                    looks identical to a real one. Time only. */}
                 <span style={{ font: "500 var(--body-s-size)/var(--body-s-lh) var(--font-body)", color: "var(--sub)" }}>
-                  Just a timer. You still get a video — a focus graph instead.
+                  Just a timer. You still get a video — your time, without the score.
                 </span>
               </li>
             </ul>
@@ -387,19 +394,46 @@ function WaitlistCta({
   );
 }
 
+/* Ordered by how much the question blocks someone from typing their email:
+   the two that disqualify a reader outright come first, then the scary one,
+   then the practical ones, then price, then the ask. */
 const FAQ: FaqItem[] = [
   { q: "When does it launch?", a: "We're targeting mid-August 2026. iOS first — Android after that." },
   {
+    // Split out of the launch answer on purpose: buried inside it, an Android
+    // reader only learns they are out of scope after opening Q1, by which point
+    // most of them have gone. Asked plainly, it still earns the signup.
+    q: "Is there an Android version?",
+    a: "Not at launch — iOS first, Android after. Join the list anyway: we'll email you the day Android lands, and not before then.",
+  },
+  {
     q: "Do I have to show my face?",
     a: "No. By default, faces are blurred or replaced with an emoji in every video. All detection happens on your device — nothing is ever uploaded anywhere.",
+  },
+  {
+    // Introduces Simple Mode, so it has to come before the question below,
+    // which leans on it. No score here: no camera means no focus signal, and a
+    // number with nothing behind it would forge the same artifact the camera
+    // earns honestly.
+    q: "What if I can't prop my phone up somewhere?",
+    a: "There's a Simple Mode — no camera, just a timer. You still get a video at the end; it shows your time, not a focus score. The score is the part that needs the camera.",
+  },
+  {
+    // The one objection the page never answered. Plenty of students study with
+    // a dictionary or PDFs on the phone, and until now nothing here told them
+    // whether that was allowed.
+    q: "Can I still use my phone while I study?",
+    a: "Not while the camera's watching — your phone is the camera, propped up and facing you. Music through headphones still works; the screen is what you give up. If your phone is your textbook, use Simple Mode instead: it's just a timer, so use your phone however you like.",
   },
   {
     q: "Is it free?",
     a: "Yes — one session a day, with a watermark on the video. Pro removes the daily limit and shrinks the watermark.",
   },
   {
-    q: "What if I can't prop my phone up somewhere?",
-    a: "There's a Simple Mode — no camera, just a timer. You still get a video, just without the footage: a focus graph instead.",
+    // "Post it" is step 04 and the hero calls the video "worth posting", which
+    // reliably reads as a requirement. It isn't one, and saying so costs a line.
+    q: "Do I have to post the video?",
+    a: "No. Nothing leaves your phone unless you tap share. Plenty of people just keep them — the video is proof for you first, and a post second.",
   },
 ];
 
