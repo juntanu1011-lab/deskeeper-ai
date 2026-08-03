@@ -417,6 +417,18 @@ Get watched. Get proof.
       apexへの308リダイレクトは `web/next.config.mjs` の host マッチで持つ。
       本番環境変数 `NEXT_PUBLIC_SITE_URL=https://kept.study` を設定済み — `app/layout.tsx` の
       `metadataBase` がこれを見るので、**消すと og:image が localhost 絶対URLに落ちる**)
+- [x] デプロイの自動化(2026-08-03。GitHub `juntanu1011-lab/deskeeper-ai` を Vercel プロジェクト `kept` に接続。
+      **`main` への push = 本番公開**、それ以外のブランチは push でプレビューURLが出る)
+
+### デプロイの構成(触る前に読むこと)
+
+Next.jsアプリは `web/` にあり、リポジトリ直下に `package.json` は無い。
+そのため Vercel 側の **Root Directory は `web`** に設定してある。ここが噛み合っていないとビルドが落ちる:
+
+- `.vercel/`(プロジェクトリンク)は**リポジトリ直下**に置く。`web/` 側には置かない
+- 手動デプロイする場合も**リポジトリ直下**で `vercel --prod`。`web/` から叩くと Root Directory が二重に適用されて `web/web` を探しに行く
+- Vercelの環境変数は **Production にしか登録していない**。`vercel env pull` で `.env.local` を上書きすると
+  Supabaseのキーが消えてローカルのフォーム送信が壊れる(2026-08-03 に踏みかけた)
 
 **実装の正は `web/` のコード。** このドキュメントは意図と制約を残すためのもので、
 値が食い違ったらコードを信じること(§5の実測値は 2026-08-02 に `web/app/styles/tokens/` から測り直した)。
