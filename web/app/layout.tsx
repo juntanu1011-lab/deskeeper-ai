@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
 
@@ -57,6 +57,17 @@ export const metadata: Metadata = {
     description,
     images: ["/og.png"],
   },
+};
+
+/* The site is dark-only. Without `colorScheme`, the browser renders its own UA
+   surfaces in light mode over a near-black page — most visibly Chrome/Safari
+   autofill, which paints the waitlist input pale blue-on-white. That input is
+   the only conversion element on the page, so this one line matters more than
+   it looks. It also gives the page a dark scrollbar.
+   Next 14+ requires these in `viewport`, not `metadata`. */
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#0A0C10", // --dk-black
 };
 
 export default function RootLayout({

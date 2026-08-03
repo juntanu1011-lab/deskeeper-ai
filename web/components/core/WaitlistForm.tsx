@@ -6,7 +6,9 @@ import { Button } from "./Button";
 import { Mascot } from "../brand/Mascot";
 
 /* design.md §11 — Input + Primary side by side inside one pill container (desktop),
-   stacked under 520px. Max width 440px. On submit the form is REPLACED in place by a
+   stacked under 520px (the breakpoint lives in landing.css as .dk-waitlist-row;
+   it cannot be a prop, because a prop cannot follow the viewport).
+   Max width 440px. On submit the form is REPLACED in place by a
    success message — never a page transition.
    Submits to /api/waitlist (Supabase behind it). Success only flips after the
    server confirms — an optimistic flip here would lie to the user when the
@@ -14,7 +16,6 @@ import { Mascot } from "../brand/Mascot";
 export interface WaitlistFormProps {
   buttonLabel?: string;
   microcopy?: string;
-  stacked?: boolean;
   /** Where on the page this form sits — stored alongside the email. */
   source?: string;
   onSubmit?: (email: string) => void;
@@ -24,7 +25,6 @@ export interface WaitlistFormProps {
 export function WaitlistForm({
   buttonLabel = "Notify me",
   microcopy,
-  stacked = false,
   source = "lp",
   onSubmit,
   successMessage = "You're on the list. We'll email you once — the day it's ready.",
@@ -113,16 +113,13 @@ export function WaitlistForm({
 
   return (
     <div style={{ maxWidth: "var(--form-max)", width: "100%", display: "grid", gap: "var(--space-3)" }}>
-      <form
-        onSubmit={submit}
-        style={{
-          display: stacked ? "grid" : "flex",
-          gap: stacked ? "var(--space-3)" : "var(--space-2)",
-          alignItems: "center",
-        }}
-      >
-        <Input value={email} onChange={(e) => setEmail(e.target.value)} />
-        <Button type="submit" disabled={busy} style={stacked ? { width: "100%" } : undefined}>
+      <form onSubmit={submit} className="dk-waitlist-row">
+        <Input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          aria-label="Email address"
+        />
+        <Button type="submit" disabled={busy}>
           {busy ? "Joining…" : buttonLabel}
         </Button>
       </form>
