@@ -39,11 +39,24 @@ export function WaitlistForm({
     if (!email.includes("@") || busy) return;
     setBusy(true);
     setError(null);
+    // Fold UTM params from the landing URL into the stored source, so signups
+    // can be traced back to the post that brought them: "tiktok/demo-1/hero".
+    // Read at submit time — this is a one-page site, the URL never changes.
+    let fullSource = source;
+    try {
+      const p = new URLSearchParams(window.location.search);
+      const utm = [p.get("utm_source"), p.get("utm_campaign")]
+        .filter((v): v is string => !!v?.trim())
+        .map((v) => v.trim().slice(0, 24));
+      if (utm.length) fullSource = [...utm, source].join("/");
+    } catch {
+      /* URL parsing never blocks a signup */
+    }
     try {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, source }),
+        body: JSON.stringify({ email, source: fullSource }),
       });
       if (!res.ok) {
         const body = (await res.json().catch(() => null)) as { error?: string } | null;
