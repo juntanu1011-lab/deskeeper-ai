@@ -263,11 +263,15 @@
 
 | 要素 | 役割 |
 |---|---|
-| ベゼル(`deviceBezel` のグラデーション、角丸46px、パディング9px) | 輪郭そのもの。これが無いと成立しない |
-| ステータスバー(9:41 / Dynamic Island / 電波・バッテリー) | 「スマホの画面」だと一目で分かる記号 |
+| チタン風リム(`deviceBezel` のグラデーション+インセットハイライト)+黒いガラス縁 | 輪郭そのもの。これが無いと成立しない |
+| サイドボタン(左: アクション+音量2つ / 右: 電源) | 「本物の端末」に見せる記号 |
+| ステータスバー(9:41 / Dynamic Island+カメラレンズ / 電波・バッテリー) | 「スマホの画面」だと一目で分かる記号 |
 | ホームインジケーター | 同上 |
 | `shadow.device` | 地から浮かせる |
 | スコア背後の琥珀のラジアル(上部18%あたりが中心) | 一灯光源。影を使わずに奥行きを作る |
+
+画面は **iPhone の論理解像度 390×844(19.5:9)で組んで transform で縮小**する。
+9:16 で直接組むと寸詰まりの古い端末に見える(2026-08-03 に修正済み)。
 
 **掃除のつもりでベゼルを剥がさないこと。** 地が暗いうちは、これがプロダクトの見せ場を成立させている唯一の仕掛け。
 
@@ -329,8 +333,9 @@ LPでも**アプリ本体と完全に同じ配色**を使う(LPパレットで�
 - Eyebrow: `WHAT COMES OUT`
 - 見出し(`display-m`): **See what you get at the end.**
 - 本文(`body-m`): Everything runs on your device — nothing is ever uploaded. Faces are blurred or replaced with an emoji by default. What's left is a score, a time, and proof you sat there and did it.
-- 右側に **9:16のスコアカード**(§12の通りアプリ本体の色で)。中身: マスコット+`Kept` / `87/100` / 琥珀グラデーションのバー / `2h 14m · Math`
-- 注釈(`body-xs`): Actual app colors.
+- 右側に **実機フレーム付きのスコア画面**(§12の通り)。中身は `/score-lab` の有力案 D2c を反映:
+  マスコット+`Kept` / `Focus score 87` / 折れ線の集中トレース(`4 breaks`) / `2h 14m · Math` / proud マスコット / `Make it a video →`
+- 注釈(`body-xs`): This card gets burned into your video.
 
 ### 14.6 Waitlist(メインCTA)
 - 背景を `panel` → `base` のグラデーションにして、上下に `divider` の線を入れてセクションを際立たせる
@@ -399,13 +404,19 @@ Get watched. Get proof.
 - [x] 配色の決定(黒 + 琥珀。2026-08-02)
 - [x] Next.js プロジェクト初期化(`web/`)
 - [x] Heroの折り返しの修正
-- [ ] スコア画面のレイアウト比較(数字ドーン / 円形ゲージ / ランク / 波形)→ 決定後に `ScoreCard` の中身を作り直す
+- [ ] スコア画面のレイアウト比較(数字ドーン / 円形ゲージ / ランク / 波形)→ コメントの置き場所が未決。
+      LPの `ScoreCard` は有力案 **D2c(折れ線トレース+マスコット・コメント無し)** を先行反映済み(2026-08-03)。
+      最終決定が変わったら `ScoreCard` を追従させる
 - [ ] `mascot-proud.png` を `web/public/mascot/` に配置(送信成功ステートが現状404)
 - [x] Supabase プロジェクトの新規作成 + `waitlist` テーブル(2026-08-02。ref `bwjhqbmoljnwpbbwmhut`、東京。
       RLS有効・ポリシー無しで、書き込みは service role 経由の `/api/waitlist` のみ。マイグレーションは `supabase/migrations/`)
 - [x] Supabase接続 → フォーム送信の実装(登録200 / 不正メール400 / 重複200 をE2Eで確認済み)
 - [ ] OG画像(SNSシェア時のプレビュー)
-- [ ] 独自ドメイン
+- [x] 独自ドメイン(2026-08-03。`kept.study` を Vercel で取得 → Vercelプロジェクト `kept`(旧 `deskeeper`)に接続。
+      更新 $55/年・2027-08-03 期限。`www.kept.study` も同プロジェクトに紐付け済みで、
+      apexへの308リダイレクトは `web/next.config.mjs` の host マッチで持つ。
+      本番環境変数 `NEXT_PUBLIC_SITE_URL=https://kept.study` を設定済み — `app/layout.tsx` の
+      `metadataBase` がこれを見るので、**消すと og:image が localhost 絶対URLに落ちる**)
 
 **実装の正は `web/` のコード。** このドキュメントは意図と制約を残すためのもので、
 値が食い違ったらコードを信じること(§5の実測値は 2026-08-02 に `web/app/styles/tokens/` から測り直した)。
