@@ -12,6 +12,10 @@ export interface NavProps extends HTMLAttributes<HTMLElement> {
    *  not the LP (e.g. /privacy), which are server components and cannot pass a
    *  handler down. Takes precedence over onCta. */
   ctaHref?: string;
+  /** Where the wordmark goes. The nav carries no links besides the CTA, so on
+   *  any page that is not the LP this is the only way back — leaving it inert
+   *  strands the reader on /privacy. */
+  homeHref?: string;
   mascot?: ReactNode;
 }
 
@@ -19,6 +23,7 @@ export function Nav({
   ctaLabel = "Join the Waitlist",
   onCta,
   ctaHref,
+  homeHref = "/",
   mascot = <Mascot pose="front" size={38} />,
   style,
   ...rest
@@ -48,7 +53,16 @@ export function Nav({
           gap: "var(--space-4)",
         }}
       >
-        <Wordmark size="l" slot={mascot} />
+        {/* base.css gives every <a> an amber, underlined hover — right for body
+            copy, wrong for a lockup. Only the opacity shift is kept, so the
+            wordmark reads as a link without changing colour. */}
+        <a
+          href={homeHref}
+          aria-label="Kept — home"
+          style={{ color: "inherit", textDecoration: "none", display: "inline-flex" }}
+        >
+          <Wordmark size="l" slot={mascot} />
+        </a>
         {ctaHref ? (
           <Button size="s" as="a" href={ctaHref}>
             {ctaLabel}

@@ -88,6 +88,20 @@ export default function PrivacyPage() {
       <Nav ctaHref="/#waitlist" />
       <main style={{ padding: "var(--section-gap) 0" }}>
         <div style={CONTENT}>
+          {/* Points at "/" rather than history.back(): this page is linked from
+              the footer, but it is also the privacy URL of record, so plenty of
+              readers arrive with no history to go back to. */}
+          <a
+            href="/"
+            style={{
+              display: "inline-block",
+              marginBottom: "var(--space-6)",
+              font: "500 var(--body-s-size)/var(--body-s-lh) var(--font-body)",
+              color: "var(--sub)",
+            }}
+          >
+            ← Back to Kept
+          </a>
           <h1
             style={{
               font: "900 var(--display-l-size)/1.1 var(--font-display)",
