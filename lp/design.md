@@ -1,4 +1,4 @@
-# design.md — Deskeeper ランディングページ(ウェイトリスト)
+# design.md — Kept ランディングページ(ウェイトリスト)
 
 > **このファイルの使い方:** Claude Design(claude.ai)で新規デザインシステムを作り、このファイルをそのまま投入する。
 > 併せて `lp/tokens.json`(数値トークン)とマスコット画像を Brand Assets として追加する。
@@ -298,14 +298,14 @@ LPでも**アプリ本体と完全に同じ配色**を使う(LPパレットで�
 ## 14. ページ構成とコピー(英語・確定ドラフト)
 
 ### 14.1 Nav
-- 左: マスコット + `Deskeeper`
+- 左: マスコット + `Kept`
 - 右: `Join the Waitlist`(Button/Primary)
 
 ### 14.2 Hero
 - Badge: `Launching soon — iOS first`
 - 見出し(`display-xl`): **Put your phone down. Get watched. Get proof.**
   - 「watched」だけ `bright` で色を変える
-- サブ(`body-l`・`sub`): Deskeeper turns your phone into a camera that watches you study — then hands you back a video worth posting.
+- サブ(`body-l`・`sub`): Kept turns your phone into a camera that watches you study — then hands you back a video worth posting.
 - Waitlist Form(プレースホルダ `your@email.com` / ボタン `Notify me`)
 - マイクロコピー(`body-xs`・`sub`): No spam. One email when we launch. That's it.
 
@@ -329,7 +329,7 @@ LPでも**アプリ本体と完全に同じ配色**を使う(LPパレットで�
 - Eyebrow: `WHAT COMES OUT`
 - 見出し(`display-m`): **See what you get at the end.**
 - 本文(`body-m`): Everything runs on your device — nothing is ever uploaded. Faces are blurred or replaced with an emoji by default. What's left is a score, a time, and proof you sat there and did it.
-- 右側に **9:16のスコアカード**(§12の通りアプリ本体の色で)。中身: マスコット+`Deskeeper` / `87/100` / 琥珀グラデーションのバー / `2h 14m · Math`
+- 右側に **9:16のスコアカード**(§12の通りアプリ本体の色で)。中身: マスコット+`Kept` / `87/100` / 琥珀グラデーションのバー / `2h 14m · Math`
 - 注釈(`body-xs`): Actual app colors.
 
 ### 14.6 Waitlist(メインCTA)
@@ -349,7 +349,7 @@ LPでも**アプリ本体と完全に同じ配色**を使う(LPパレットで�
 | What if I can't prop my phone up somewhere? | There's a Simple Mode — no camera, just a timer. You still get a video, just without the footage: a focus graph instead. |
 
 ### 14.8 Footer
-マスコット + `Deskeeper` / リンク: `X / Twitter`・`Privacy`
+マスコット + `Kept` / リンク: `X / Twitter`・`Privacy`
 
 ---
 
@@ -382,7 +382,7 @@ Get watched. Get proof.
 
 ## 16. Claude Design への依頼文(このまま貼ってよい)
 
-> 上記の design.md をもとに、Deskeeper というアプリのウェイトリスト獲得用ランディングページを1ページで作ってください。
+> 上記の design.md をもとに、Kept というアプリのウェイトリスト獲得用ランディングページを1ページで作ってください。
 > ほぼ黒(#0A0C10)の地に、琥珀(#FFB02E)だけが色として効く2色構成です。琥珀は「フォーカススコア」と
 > 「押せるもの」にだけ使い、それ以外の強調はクリームの明度差で作ってください。
 > §5.3 の制約(CTAボタンの文字は #1A1206。クリームだとコントラスト1.59で読めない)と、

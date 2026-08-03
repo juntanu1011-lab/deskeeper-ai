@@ -24,7 +24,7 @@ export function ScoreCard({
   score = 87,
   duration = "2h 14m",
   subject = "Math",
-  label = "Deskeeper",
+  label = "Kept",
   mascot = <Mascot pose="front" size={18} />,
   footnote = "This card gets burned into your video.",
   style,

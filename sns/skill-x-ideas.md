@@ -1,6 +1,6 @@
 ---
 name: x-ideas
-description: Use when brainstorming an X (Twitter) post for Deskeeper AI's @deskeeper_ai account. Either expand a specific seed the user brings ("today I did X, turn it into a post") or, if nothing is given, generate a fresh batch spanning different content pillars. Always reads the project's sns/strategy.md first so posts stay on-brand and match X's role as the build-in-public hub.
+description: Use when brainstorming an X (Twitter) post for Deskeeper's @deskeeper_ai account. Either expand a specific seed the user brings ("today I did X, turn it into a post") or, if nothing is given, generate a fresh batch spanning different content pillars. Always reads the project's sns/strategy.md first so posts stay on-brand and match X's role as the build-in-public hub.
 user-invocable: true
 argument-hint: optional — a topic, moment, or raw idea to build into a post/thread; leave blank for a fresh batch
 ---
@@ -19,9 +19,10 @@ Read `sns/strategy.md` in the current project (if it exists) for the current:
 - **International-reach rules** (§5) — English only; initial replies/quote-tweets matter more than
   follower count for a new account; schedule for the target audience's active hours if the post
   will be scheduled
-- **Minor-related constraints** (§8) — no exact age/school/location if the founder's age comes up;
-  the "teen founder as a hook" question may still be open — don't assume it's resolved either way,
-  check the doc
+- **Voice/persona** (§1/§2) — the account is presented as a person: pseudonym **Santo**, display
+  name "Santo — building Deskeeper". Posts are written first-person as Santo, not brand-speak.
+- **Minor-related constraints** (§8) — decided 2026-08-02: the age IS the hook — `14yo solo dev`
+  leads the bio, and posts may lean on it; **school/grade/location/real name/face stay off-limits**
 - **Brand principles** (from `lp/design.md` if present) — no fake stats/social proof, honest about
   what's built vs. not-yet-built, turn shame into pride rather than fear-mongering
 - **Current reach reality** (§8/§9 if present) — X's algorithmic reach for this account may be

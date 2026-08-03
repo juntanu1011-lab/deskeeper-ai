@@ -1,6 +1,6 @@
 "use client";
 
-/* Deskeeper waitlist LP — section composition (design.md §14).
+/* Kept waitlist LP — section composition (design.md §14).
    Copy is verbatim from the confirmed English draft; do not paraphrase. */
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
 import { Nav } from "../navigation/Nav";
@@ -149,7 +149,7 @@ function Hero({ onJoin }: { onJoin: (email: string) => void }) {
               textWrap: "balance",
             }}
           >
-            Deskeeper turns your phone into a camera that watches you study — then hands you back a video worth
+            Kept turns your phone into a camera that watches you study — then hands you back a video worth
             posting.
           </p>
         </Reveal>

@@ -1,6 +1,6 @@
 ---
 name: tiktok-ideas
-description: Use when brainstorming a TikTok (or Instagram Reels — same footage) content idea for Deskeeper AI. Either expand a specific seed the user brings ("today I did X, turn it into a video") or, if nothing is given, generate a fresh batch spanning different content pillars. Always reads the project's sns/strategy.md first so ideas stay on-brand instead of generic.
+description: Use when brainstorming a TikTok (or Instagram Reels — same footage) content idea for Deskeeper. Either expand a specific seed the user brings ("today I did X, turn it into a video") or, if nothing is given, generate a fresh batch spanning different content pillars. Always reads the project's sns/strategy.md first so ideas stay on-brand instead of generic.
 user-invocable: true
 argument-hint: optional — a topic, moment, or raw idea to build into a script; leave blank for a fresh batch
 ---
@@ -21,8 +21,11 @@ Read `sns/strategy.md` in the current project (if it exists) for the current:
   mode it needs.
 - **International-reach rules** (§5) — English-only captions/hashtags/on-screen text, no
   Japan-specific references
-- **Minor-related constraints** (§8) — no exact age/school/location if the idea touches on the
-  founder being young; no claims implying features the product doesn't have yet
+- **Voice/persona** (§1/§2) — the account is presented as a person: pseudonym **Santo**, a 14yo
+  solo dev building in public. Spoken/caption voice is first-person Santo, not brand-speak.
+- **Minor-related constraints** (§8) — age (14) is deliberately public in the bio and fine to use
+  as a hook; **school/grade/location/real name/face stay off-limits**; no claims implying features
+  the product doesn't have yet
 - **Brand principles** (from `lp/design.md` if present) — turn shame into pride, don't fear-monger,
   no fake social proof/stats
 - **Current channel reality** (§1/§9) — TikTok is under a For You feed reach gate until age 16

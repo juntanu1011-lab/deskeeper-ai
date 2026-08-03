@@ -1,6 +1,6 @@
 import type { ImgHTMLAttributes } from "react";
 
-/* The Deskeeper meerkat (design.md §13). Six supplied poses, soft 3D-render style,
+/* The Kept meerkat (design.md §13). Six supplied poses, soft 3D-render style,
    transparent PNG. Colours are baked into the artwork and are never recoloured by the
    LP palette. Appears 3–4 times per page, maximum — nav, hero badge, footer.
 

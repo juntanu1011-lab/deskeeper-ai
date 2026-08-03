@@ -1,4 +1,4 @@
-/* Deskeeper palette — Black + Amber.
+/* Kept palette — Black + Amber.
    The LP and the app share one palette (decided 2026-08-02). Only two hues are
    in play: a near-black ground and amber. Everything else is a neutral step
    between cream and grey. Keep it that way — the restraint is the brand.
@@ -25,7 +25,7 @@
 --cta-ink:#1A1206;
 --warm:var(--dk-amber);
 /* --wordmark-accent removed 2026-08-03: it existed only to tint the "AI" in the
-   old "Deskeeper AI" lockup, and the name is now just "Deskeeper". The raw
+   old "Deskeeper AI" lockup, and the name is now just "Kept". The raw
    --dk-amber-muted stays in the palette above if a quieter amber is needed. */
 
 --surface-page:var(--base);--surface-card:var(--panel);--surface-nested:var(--panel2);

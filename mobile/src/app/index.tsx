@@ -32,7 +32,7 @@ const LabCamera = memo(function LabCamera({
 }: {
   onFacesDetected: FacesCallback
   onError: ErrorCallback
-  onLog: (msg: string) => void
+  onLog?: (msg: string) => void
 }) {
   return (
     <Camera
@@ -43,11 +43,11 @@ const LabCamera = memo(function LabCamera({
       onError={onError}
       onPreviewStarted={() => {
         console.log('[LabCamera] preview started')
-        onLog('camera: preview started')
+        onLog?.('camera: preview started')
       }}
       onPreviewStopped={() => {
         console.log('[LabCamera] preview stopped')
-        onLog('camera: preview stopped')
+        onLog?.('camera: preview stopped')
       }}
       performanceMode="fast"
       trackingEnabled={true}
@@ -169,9 +169,9 @@ export default function CvLab() {
     return (
       <View style={[styles.root, styles.center]}>
         <Text style={styles.h1}>CV Lab</Text>
-        <Text style={styles.sub}>前面カメラで顔検出テストを行います。{'\n'}映像は端末の外に出ません。</Text>
+        <Text style={styles.sub}>Focus detection test using the front camera.{'\n'}Nothing ever leaves your device.</Text>
         <Pressable style={styles.btn} onPress={requestPermission}>
-          <Text style={styles.btnLabel}>カメラを許可</Text>
+          <Text style={styles.btnLabel}>Allow Camera</Text>
         </Pressable>
       </View>
     )
@@ -187,9 +187,9 @@ export default function CvLab() {
         <Text style={[styles.stateLabel, { color: stateColor }]}>{state}</Text>
         <Text style={styles.sub}>
           {state === 'FACE' &&
-            (Math.abs(telemetry.pitch) > 15 ? '在席 — 手元を見ている(勉強姿勢?)' : '在席 — 正面')}
-          {state === 'NO_FACE' && `顔が消えて ${(noFaceMs / 1000).toFixed(1)}s — 深い下向き or 離席`}
-          {state === 'PICKED_UP' && '端末が動いた!'}
+            (Math.abs(telemetry.pitch) > 15 ? 'Present — head down at your work' : 'Present — facing forward')}
+          {state === 'NO_FACE' && `Face lost for ${(noFaceMs / 1000).toFixed(1)}s — head down or away`}
+          {state === 'PICKED_UP' && 'Device moved!'}
         </Text>
       </View>
 
@@ -207,7 +207,7 @@ export default function CvLab() {
       </View>
 
       <View style={styles.logBox}>
-        {log.length === 0 && <Text style={styles.sub}>状態遷移ログ(まだなし)</Text>}
+        {log.length === 0 && <Text style={styles.sub}>State transitions (none yet)</Text>}
         {log.map((e, i) => (
           <Text key={i} style={styles.logLine}>
             <Text style={styles.sub}>{e.at} </Text>

@@ -126,7 +126,7 @@ function Phone({ children, label }: { children: ReactNode; label?: string }) {
           {/* app label */}
           <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 7, paddingTop: 26 }}>
             <Mascot pose="front" size={22} />
-            <span style={{ font: "700 15px/1 var(--font-body)", color: "var(--app-ink)" }}>Deskeeper</span>
+            <span style={{ font: "700 15px/1 var(--font-body)", color: "var(--app-ink)" }}>Kept</span>
           </div>
           {/* body */}
           <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column", paddingTop: 18 }}>

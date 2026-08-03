@@ -1,6 +1,6 @@
 import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
 
-/* "Deskeeper" set in Bricolage Grotesque 800 — pairs with whatever mascot asset is
+/* "Kept" set in Bricolage Grotesque 800 — pairs with whatever mascot asset is
    passed via `slot` (design.md §13 — 3D render at large sizes, flat silhouette at ~20px). */
 export interface WordmarkProps extends Omit<HTMLAttributes<HTMLSpanElement>, "slot"> {
   size?: "s" | "m" | "l";
@@ -43,7 +43,7 @@ export function Wordmark({
           } as CSSProperties
         }
       >
-        Deskeeper
+        Kept
       </span>
     </span>
   );

@@ -1,6 +1,6 @@
 ---
 name: instagram-ideas
-description: Use when brainstorming an Instagram (Reels, feed, or Stories) content idea for Deskeeper AI's @deskeeper_ai account. Either expand a specific seed the user brings ("today I did X, turn it into a post") or, if nothing is given, generate a fresh batch spanning different content pillars and formats. Always reads the project's sns/strategy.md first, including the account's current public/private status.
+description: Use when brainstorming an Instagram (Reels, feed, or Stories) content idea for Deskeeper's @deskeeper_ai account. Either expand a specific seed the user brings ("today I did X, turn it into a post") or, if nothing is given, generate a fresh batch spanning different content pillars and formats. Always reads the project's sns/strategy.md first, including the account's current public/private status.
 user-invocable: true
 argument-hint: optional — a topic, moment, or raw idea to build into a post; leave blank for a fresh batch
 ---
@@ -17,16 +17,18 @@ Read `sns/strategy.md` in the current project (if it exists) for the current:
 - **Instagram's role** (§1) — currently the primary near-term acquisition channel (Reels), unlike
   TikTok which is reach-gated until age 16. Ideas here should feel free to aim for real
   non-follower discovery via Explore, not just bank content for later.
-- **Account status** (§9) — check whether the account is still private pending Family Center
-  approval. If it is, flag that Reels-for-discovery ideas are blocked on that unlock, and prefer
-  Stories/feed ideas aimed at the existing small circle in the meantime if anything needs posting
-  now.
+- **Account status** (§9) — the private-account unlock (Family Center approval) was completed
+  2026-08-02, so Reels-for-discovery ideas are no longer blocked on it. Still check §9 for the
+  current state (e.g. bio link pending LP) rather than assuming.
 - **Content pillars** (§3) — pull from all of them over a batch, not just one repeatedly
 - **Persona policy** (§6) — Option D: mascot for dev-log/world-building, faceless screen-recording
   for demo/proof content, no AI-fictional persona. Specify which mode each idea needs.
 - **International-reach rules** (§5) — English only, captions/hashtags aimed at the study-with-me /
   studytok audience
-- **Minor-related constraints** (§8) — no exact age/school/location if the founder's age comes up
+- **Voice/persona** (§1/§2) — the account is presented as a person: pseudonym **Santo**, a 14yo
+  solo dev building in public. Captions are written first-person as Santo, not brand-speak.
+- **Minor-related constraints** (§8) — age (14) is deliberately public in the bio and fine to use
+  as a hook; **school/grade/location/real name/face stay off-limits**
 - **Brand principles** (from `lp/design.md` if present) — no fake stats/social proof, turn shame
   into pride rather than fear-mongering
 
@@ -48,8 +50,7 @@ Treat the user's input as the anchor — expand it into one concrete idea:
 3. **Which pillar** it maps to (§3).
 4. **Caption** — first line is what shows before "more" truncates it, so it must work standalone.
 5. **Hashtags** — a handful of specific/relevant ones over a large generic block.
-6. **Status**: postable now / blocked on <thing, e.g. account still private, or an unbuilt app
-   screen>.
+6. **Status**: postable now / blocked on <thing, e.g. an unbuilt app screen or missing asset>.
 
 ## If no seed is given
 

@@ -35,9 +35,9 @@ const siteUrl =
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : "http://localhost:3000");
 
-const title = "Deskeeper — Put your phone down. Get watched. Get proof.";
+const title = "Kept — Put your phone down. Get watched. Get proof.";
 const description =
-  "Deskeeper turns your phone into a camera that watches you study — then hands you back a video worth posting. Join the waitlist.";
+  "Kept turns your phone into a camera that watches you study — then hands you back a video worth posting. Join the waitlist.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
     title,
     description,
     url: "/",
-    siteName: "Deskeeper",
+    siteName: "Kept",
     type: "website",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Deskeeper — focus score 87" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Kept — focus score 87" }],
   },
   twitter: {
     card: "summary_large_image",
