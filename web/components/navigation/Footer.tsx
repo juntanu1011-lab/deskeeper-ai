@@ -7,7 +7,11 @@ export interface FooterLink {
   href: string;
 }
 
-/* design.md §14.8 — mascot + wordmark, and two links. Nothing more. */
+/* design.md §14.8 — mascot + wordmark, and the links. Nothing more.
+   Every entry here must go somewhere real. There is deliberately no X link:
+   the account it should point at (@santo_builds) does not exist yet, and a
+   footer link that goes nowhere is worse than no link. Add it when the handle
+   is live — sns/strategy.md §2 tracks that migration. */
 export interface FooterProps extends HTMLAttributes<HTMLElement> {
   links?: FooterLink[];
   mascot?: ReactNode;
@@ -16,8 +20,9 @@ export interface FooterProps extends HTMLAttributes<HTMLElement> {
 
 export function Footer({
   links = [
-    { label: "X / Twitter", href: "#" },
-    { label: "Privacy", href: "#" },
+    { label: "Instagram", href: "https://www.instagram.com/kept.study/" },
+    { label: "TikTok", href: "https://www.tiktok.com/@kept.study" },
+    { label: "Privacy", href: "/privacy" },
   ],
   mascot = <Mascot pose="front" size={30} />,
   note,
@@ -40,19 +45,26 @@ export function Footer({
       >
         <Wordmark slot={mascot} />
         <nav style={{ display: "flex", gap: "var(--space-6)" }}>
-          {links.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              style={{
-                font: "500 var(--body-xs-size)/var(--body-xs-lh) var(--font-body)",
-                color: "var(--sub)",
-                textDecoration: "none",
-              }}
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) => {
+            const external = l.href.startsWith("http");
+            return (
+              <a
+                key={l.label}
+                href={l.href}
+                // Social links leave the site; keep the LP in its own tab and
+                // deny the opener handle to the destination.
+                target={external ? "_blank" : undefined}
+                rel={external ? "noopener noreferrer" : undefined}
+                style={{
+                  font: "500 var(--body-xs-size)/var(--body-xs-lh) var(--font-body)",
+                  color: "var(--sub)",
+                  textDecoration: "none",
+                }}
+              >
+                {l.label}
+              </a>
+            );
+          })}
         </nav>
       </div>
       {note && (

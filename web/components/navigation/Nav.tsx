@@ -8,12 +8,17 @@ import { Mascot } from "../brand/Mascot";
 export interface NavProps extends HTMLAttributes<HTMLElement> {
   ctaLabel?: string;
   onCta?: MouseEventHandler<HTMLButtonElement>;
+  /** Link target for the CTA instead of a click handler. Use on pages that are
+   *  not the LP (e.g. /privacy), which are server components and cannot pass a
+   *  handler down. Takes precedence over onCta. */
+  ctaHref?: string;
   mascot?: ReactNode;
 }
 
 export function Nav({
   ctaLabel = "Join the Waitlist",
   onCta,
+  ctaHref,
   mascot = <Mascot pose="front" size={38} />,
   style,
   ...rest
@@ -44,9 +49,15 @@ export function Nav({
         }}
       >
         <Wordmark size="l" slot={mascot} />
-        <Button size="s" onClick={onCta}>
-          {ctaLabel}
-        </Button>
+        {ctaHref ? (
+          <Button size="s" as="a" href={ctaHref}>
+            {ctaLabel}
+          </Button>
+        ) : (
+          <Button size="s" onClick={onCta}>
+            {ctaLabel}
+          </Button>
+        )}
       </div>
     </header>
   );

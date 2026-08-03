@@ -344,6 +344,7 @@ function WaitlistCta({
 }) {
   return (
     <section
+      id="waitlist"
       ref={refEl}
       style={{
         padding: "var(--section-gap) 0",
