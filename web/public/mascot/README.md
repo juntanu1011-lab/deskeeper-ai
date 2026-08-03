@@ -1,32 +1,27 @@
-# public/mascot/ — drop the meerkat PNGs here
+# public/mascot/ — the meerkat PNGs
 
 `components/brand/Mascot.tsx` reads `${assetBase}mascot-${pose}.png` with
-`assetBase` defaulting to `/mascot/`, so every file below must sit directly in
-this folder (same level as this README), already background-transparent with
-no baked-in ground shadow (the shadow is applied in code via `filter:
-drop-shadow(...)` in `Mascot.tsx` — do not re-add it to the art).
+`assetBase` defaulting to `/mascot/`, so every file below sits directly in this
+folder. All of them are background-transparent with **no baked-in ground
+shadow** — the shadow is applied in code via `filter: drop-shadow(...)` in
+`Mascot.tsx`. Do not re-add it to the art.
 
-Required (used on the page today):
+The art is flat 2D (design.md §13). Source frames and the prompts that made
+them live in `design/mascot-2d-trials/`; `clean_mascot.py` there is the
+green-screen/white-background keying + trim + downscale pipeline that produced
+everything in this folder. Re-run it rather than hand-editing these PNGs.
 
 | File               | Used for                                                    |
-| ------------------ | ------------------------------------------------------------ |
-| `mascot-front.png` | Nav lockup (38px), Hero badge icon (20px), ScoreCard label (20px), Footer lockup (30px) — auto-swapped to `mascot-flat.png` at ≤44px |
-| `mascot-flat.png`  | Flat silhouette used automatically for `front`/`watch` at ≤44px |
-| `mascot-watch.png` | "How it works" speech-bubble aside (150px) — also auto-swaps to `flat` at ≤44px if used small |
-| `mascot-slump.png` | "The problem" section, right side (340px, wide desk scene)   |
-| `mascot-proud.png` | Waitlist success state after submit (84px)                   |
-| `mascot-face.png`  | Head crop — reserved for OG image / round avatar use          |
+| ------------------ | ----------------------------------------------------------- |
+| `mascot-flat.png`  | Nav lockup (38px), Hero badge (20px), ScoreCard label (20–22px), Footer lockup (30px) |
+| `mascot-watch.png` | "How it works" speech-bubble aside (150px) — hand-to-brow lookout, direct eye contact |
+| `mascot-slump.png` | "The problem" section (340px, wide desk scene)              |
+| `mascot-proud.png` | Waitlist success state (84px) and Score Lab result card     |
+| `mascot-face.png`  | Head crop — reserved for OG image / round avatar use         |
 
-Not referenced by the current page but supported by the `Mascot` component's
-`pose` prop (`side`, `back`, `wave`, `think`, `cheer`, `desk`) — include them
-too if you have them, so the full pose set is available for future sections:
+Supported by the `pose` prop and present here, but not on the page today:
+`side`, `back`, `wave`, `think`, `cheer`, `desk`.
 
-- `mascot-side.png`
-- `mascot-back.png`
-- `mascot-wave.png`
-- `mascot-think.png`
-- `mascot-cheer.png`
-- `mascot-desk.png`
-
-Delete this README (or leave it — it's not imported by any code) once the
-PNGs are in place.
+Note on `front`: there is no `mascot-front.png`. Every `pose="front"` call site
+renders at ≤44px, and `Mascot.tsx` swaps `front`/`watch` to `flat` at that size,
+so the file is never requested. Add one only if `front` is ever used larger.

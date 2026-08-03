@@ -34,3 +34,12 @@ yarn-error.log*
 # CV smoke test: personal photos & binaries — never commit
 lab/cv-smoke/IMG_*
 lab/cv-smoke/facetest
+
+# Mascot art: unprocessed generator output (27MB) and the pre-2D versions we
+# replaced. Kept on disk, not in git — `superseded/` is recoverable from git
+# history, `raw/` is reproducible from design/mascot-2d-trials/prompts.md.
+design/mascot-2d-trials/raw/
+design/mascot-2d-trials/superseded/
+
+# Scratch output from asset review passes
+.mascot-check/
