@@ -43,7 +43,7 @@ export function Nav({
           gap: "var(--space-4)",
         }}
       >
-        <Wordmark slot={mascot} />
+        <Wordmark size="l" slot={mascot} />
         <Button size="s" onClick={onCta}>
           {ctaLabel}
         </Button>
