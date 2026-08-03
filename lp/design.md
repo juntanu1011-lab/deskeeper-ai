@@ -411,7 +411,9 @@ Get watched. Get proof.
 - [x] Supabase プロジェクトの新規作成 + `waitlist` テーブル(2026-08-02。ref `bwjhqbmoljnwpbbwmhut`、東京。
       RLS有効・ポリシー無しで、書き込みは service role 経由の `/api/waitlist` のみ。マイグレーションは `supabase/migrations/`)
 - [x] Supabase接続 → フォーム送信の実装(登録200 / 不正メール400 / 重複200 をE2Eで確認済み)
-- [ ] OG画像(SNSシェア時のプレビュー)
+- [x] OG画像(SNSシェア時のプレビュー。`web/public/og.png` 1200x630。2026-08-04 に実物を確認して
+      チェック済みに変更 — ファイルは以前から存在していた。`app/layout.tsx` が `og:image` /
+      `twitter:image` として絶対URLで参照する)
 - [x] 独自ドメイン(2026-08-03。`kept.study` を Vercel で取得 → Vercelプロジェクト `kept`(旧 `deskeeper`)に接続。
       更新 $55/年・2027-08-03 期限。`www.kept.study` も同プロジェクトに紐付け済みで、
       apexへの308リダイレクトは `web/next.config.mjs` の host マッチで持つ。

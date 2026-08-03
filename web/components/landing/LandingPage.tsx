@@ -134,6 +134,10 @@ function Hero({ onJoin }: { onJoin: (email: string) => void }) {
             }}
           >
             <span className="dk-hero-line">Put your phone down.</span>
+            {/* Explicit space: JSX drops whitespace between elements when it
+                contains a newline, and .dk-hero-line goes display:inline below
+                560px — without this the phone headline reads "down.Get". */}
+            {" "}
             <span className="dk-hero-line">
               Get <span style={{ color: "var(--bright)" }}>watched</span>. Get proof.
             </span>
