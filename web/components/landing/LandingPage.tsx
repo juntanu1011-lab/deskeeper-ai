@@ -84,11 +84,13 @@ function Hero({ onJoin }: { onJoin: (email: string) => void }) {
       style={{
         position: "relative",
         overflow: "hidden",
-        /* Nav height: 16px padding top and bottom around a 30px Wordmark ("l")
-           whose 38px mascot slot is the tallest thing in the row — ~68px, not
-           the 62px this was set to when the wordmark was still "m". Update
-           together with Wordmark's size or the page gains a stray scrollbar. */
-        minHeight: "calc(100svh - 68px)",
+        /* Nav height, measured off the rendered divider rather than derived:
+           16px padding top and bottom around the "l" Wordmark's peek box, which
+           is the tallest thing in the row. 72px at the current 36px wordmark
+           (68px when it was 30px, 62px when it was "m"). Re-measure and update
+           this whenever Wordmark's "l" size changes, or the page gains a stray
+           scrollbar. */
+        minHeight: "calc(100svh - 72px)",
         display: "grid",
         alignItems: "center",
         paddingTop: "clamp(48px,5vw,88px)",

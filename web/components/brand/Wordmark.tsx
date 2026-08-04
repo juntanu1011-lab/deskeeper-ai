@@ -46,7 +46,9 @@ export function Wordmark({
   style,
   ...rest
 }: WordmarkProps) {
-  const px = size === "l" ? 30 : size === "s" ? 17 : 22;
+  /* "l" is the nav lockup and nothing else. Raising it changes the nav's height,
+     which LandingPage's hero subtracts from 100svh — keep the two in step. */
+  const px = size === "l" ? 36 : size === "s" ? 17 : 22;
   const type = {
     font: `800 ${px}px/1 var(--font-display)`,
     letterSpacing: "-0.015em",
