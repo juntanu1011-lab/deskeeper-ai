@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* design/og/og.html — source of web/public/og.png (1200x630).
+     Render: open in a browser, screenshot, resize to exactly 1200x630.
+     Keep this file in sync with the LP hero copy. */
+  :root{--base:#0A0C10;--ink:#EDEFF3;--sub:#8E96A4;--amber:#FFB02E}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{background:var(--base);font-family:Inter,sans-serif;position:relative}
+  .glow{position:absolute;inset:0;
+    background:radial-gradient(60% 90% at 78% 8%, rgba(255,176,46,.16), transparent 62%)}
+  .in{position:relative;padding:88px}
+  /* peek lockup — geometry mirrors web/components/brand/Wordmark.tsx.
+     Every number is derived from --px so it cannot drift out of sync:
+       slot width  = px * PEEK_HEIGHT * PEEK_AR   (1.3 * 549/920 = 0.77576)
+       slot height = px + 4
+       img height  = px * 1.3          img bottom = px * 0.14
+       wordmark pull = px * -0.18532   ( -(1-0.832)*0.77576 - 0.055 ) */
+  .mk{--px:40px;font-family:'Bricolage Grotesque';font-weight:800;letter-spacing:-.015em;
+      color:var(--ink);font-size:var(--px);line-height:1;white-space:nowrap;
+      display:inline-flex;align-items:center}
+  .slot{position:relative;display:inline-block;flex:none;
+        width:calc(var(--px) * .77576);height:calc(var(--px) + 4px)}
+  .slot img{position:absolute;left:0;bottom:calc(var(--px) * .14);
+        height:calc(var(--px) * 1.3);width:auto;filter:drop-shadow(0 1px 3px rgba(0,0,0,.55))}
+  .wm{margin-left:calc(var(--px) * -.18532)}
+  h1{font-family:'Bricolage Grotesque';font-weight:800;font-size:78px;line-height:1.06;
+     letter-spacing:-.022em;color:var(--ink);margin-top:58px}
+  h1 em{font-style:normal;background:linear-gradient(92deg,#FFB02E,#F2762B);
+        -webkit-background-clip:text;background-clip:text;color:transparent}
+  p{margin-top:30px;font:400 27px/1.45 Inter;color:var(--sub);max-width:700px}
+  .score{position:absolute;right:88px;bottom:74px;text-align:right}
+  .score .lb{font:700 19px/1 Inter;letter-spacing:.14em;color:#B07A18}
+  .score .n{font-family:'Bricolage Grotesque';font-weight:800;font-size:132px;line-height:.95;
+     letter-spacing:-.03em;margin-top:10px;
+     background:linear-gradient(150deg,#FFB02E,#EE6F2A);-webkit-background-clip:text;
+     background-clip:text;color:transparent}
+</style></head><body>
+<div class="glow"></div>
+<div class="in">
+  <span class="mk"><span class="slot"><img src="mascot-peek.png" alt=""></span><span class="wm">Kept</span></span>
+  <h1>Put your phone down.<br>Get <em>watched</em>. Get proof.</h1>
+  <p>Your phone watches you study — and hands you<br>back a video worth posting.</p>
+</div>
+<div class="score"><div class="lb">FOCUS SCORE</div><div class="n">87</div></div>
+</body></html>
