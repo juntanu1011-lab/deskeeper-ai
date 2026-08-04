@@ -1,6 +1,5 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import { Wordmark } from "../brand/Wordmark";
-import { Mascot } from "../brand/Mascot";
 
 export interface FooterLink {
   label: string;
@@ -8,10 +7,14 @@ export interface FooterLink {
 }
 
 /* design.md §14.8 — mascot + wordmark, and the links. Nothing more.
-   Every entry here must go somewhere real. There is deliberately no X link:
-   the account it should point at (@santo_builds) does not exist yet, and a
-   footer link that goes nowhere is worse than no link. Add it when the handle
-   is live — sns/strategy.md §2 tracks that migration. */
+   Every entry here must go somewhere real; these were all href="#" until the
+   accounts behind them existed.
+
+   Order is audience-first, not importance-first. A visitor here is a student
+   who just read the page — Instagram and TikTok are where they can see the
+   product (sns/strategy.md §1 puts TikTok as the acquisition ground). X is the
+   build-in-public account, which serves a different reader, so it sits after
+   them. Privacy stays last: it is an obligation, not an invitation. */
 export interface FooterProps extends HTMLAttributes<HTMLElement> {
   links?: FooterLink[];
   mascot?: ReactNode;
@@ -22,9 +25,10 @@ export function Footer({
   links = [
     { label: "Instagram", href: "https://www.instagram.com/kept.study/" },
     { label: "TikTok", href: "https://www.tiktok.com/@kept.study" },
+    { label: "X", href: "https://x.com/santo_builds" },
     { label: "Privacy", href: "/privacy" },
   ],
-  mascot = <Mascot pose="front" size={30} />,
+  mascot,
   note,
   style,
   ...rest
@@ -43,7 +47,7 @@ export function Footer({
           gap: "var(--space-4)",
         }}
       >
-        <Wordmark slot={mascot} />
+        <Wordmark variant={mascot ? "slot" : "peek"} slot={mascot} />
         <nav style={{ display: "flex", gap: "var(--space-6)" }}>
           {links.map((l) => {
             const external = l.href.startsWith("http");

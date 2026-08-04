@@ -1,7 +1,6 @@
 import type { HTMLAttributes, ReactNode, MouseEventHandler } from "react";
 import { Wordmark } from "../brand/Wordmark";
 import { Button } from "../core/Button";
-import { Mascot } from "../brand/Mascot";
 
 /* design.md §11 Nav — sticky, backdrop blur 10px, rgba(4,42,43,.75), --divider underline.
    Mascot + wordmark left, single primary CTA right. Nothing else. */
@@ -12,6 +11,8 @@ export interface NavProps extends HTMLAttributes<HTMLElement> {
    *  not the LP (e.g. /privacy), which are server components and cannot pass a
    *  handler down. Takes precedence over onCta. */
   ctaHref?: string;
+  /** Overrides the built-in peek lockup with a mascot node beside the wordmark.
+   *  Leave unset: the nav shows the meerkat leaning out from behind the K. */
   /** Where the wordmark goes. The nav carries no links besides the CTA, so on
    *  any page that is not the LP this is the only way back — leaving it inert
    *  strands the reader on /privacy. */
@@ -24,7 +25,7 @@ export function Nav({
   onCta,
   ctaHref,
   homeHref = "/",
-  mascot = <Mascot pose="front" size={38} />,
+  mascot,
   style,
   ...rest
 }: NavProps) {
@@ -61,7 +62,7 @@ export function Nav({
           aria-label="Kept — home"
           style={{ color: "inherit", textDecoration: "none", display: "inline-flex" }}
         >
-          <Wordmark size="l" slot={mascot} />
+          <Wordmark size="l" variant={mascot ? "slot" : "peek"} slot={mascot} />
         </a>
         {ctaHref ? (
           <Button size="s" as="a" href={ctaHref}>
